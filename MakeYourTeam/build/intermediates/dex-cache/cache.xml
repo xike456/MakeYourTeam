@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.1_0a49ca19c14663e18124af78d052c30a8ef417f4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\xquan\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_dda341100a9e1279676df415e41b409d5436d492.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_a88e38e675ae3f1ef6b680b4a2564a3eddbc0715.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.1_93bcf0755d5aeb0744f6466ce0cf39efb91a3208.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0efd1b44f47c134fb245914a1d54a55adbfc2f8d">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-impl-9.6.1_c88bda943f22e436ece342529c80f2ea77028d6c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="af7582c6b327449c6d32518e6a10307860b7b5d6">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-9.6.1_992a8c5ff6c1109e320e6593f801e0b9c646a155.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-common\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="77558e74bb2056ef38516296f13a27c4c4fc3e5c">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-common-9.6.1_050f2dd502c564f58aad86b428951d1e9e74f118.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-module\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6ffe8b28ab61e5ee92ab9431a220379790c71ddf">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-module-9.6.1_3dbd070c6e566eb717f2f72b07619aea76f88fc5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="eccaaa9ffa6bb4bfbd2e870f01aaf69655d353be">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-9.6.1_95007a3faf828ebfca5afcc4a2f13de4d7de36d8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.1_6dd77e3151ade31ced84186f0011dd03925db70f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.1_3f5a53c00d932a7c492b9bf3bf48f71ed9e78c61.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_2ee91497bf9f557a2918a23b8ca5ecdde35cc0b7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.1_a68cd10d4a9af4332bc63d6b21d44da43af77d8f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.1_85baa4eea9e9a03b091abffc491e036812f6c0b3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.1_1d503535064e7d95df40f00ede4dc87e6603c170.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.1_d5d749a92e7ac9f9cd3049ee5cecd9adefbd4134.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1e14ebe1cda8491f152083e752ca5bf73cd37bff">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-iid-9.6.1_f7625af344179eafce223fa0d8e919b007acdbf1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="4a36600281a648769411ef642c331851732bf29e">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-9.6.1_cf621eca250b82e14290eb6ff2b418410c6bc424.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_e9dd7f6f5dba0dafd2c070e048c1633ef35a688a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="2a18547ea91d258866d132c2a763185f15b01b25">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-9.6.1_dbcffacb95866a8500e924735de8c98204b98e58.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1ef72e72bc0d05602c366582afa9439f58bb31d6">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-common-9.6.1_89d87656a4236c39e344afc25bd12d67fea4b3a6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_cedd31246d4def850b4bb9234a936b6fc18cf116.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_493be43ae9e5e44573924f85464934815d5ba792.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.1_3f97d4300030d97191afe7638226d56ce5223db1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\9.6.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="a1c351dc10b92d638da57f3a6513f87cfbdc9f83">
+        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-9.6.1_6c4c6fe2d6d2ae45dd8e6ac0914ec438dcf16e5f.jar" />
+    </item>
+
+</items>
