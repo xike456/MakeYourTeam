@@ -85,6 +85,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                         }
                         else{
                             Toast.makeText(Register.this, "Register fail", Toast.LENGTH_SHORT).show();
+                            progressDialog.hide();
                         }
                     }
                 });

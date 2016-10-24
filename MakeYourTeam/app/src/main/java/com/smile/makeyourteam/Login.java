@@ -95,6 +95,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                         }
                         else{
                             Toast.makeText(Login.this, "log in fail", Toast.LENGTH_SHORT).show();
+                            progressDialog.hide();
                         }
                     }
                 });

@@ -63,6 +63,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
                         }
                         else{
                             Toast.makeText(ForgetPassword.this, "Try again", Toast.LENGTH_SHORT).show();
+                            progressDialog.hide();
                         }
                     }
                 });
