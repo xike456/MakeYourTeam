@@ -3,228 +3,282 @@
 
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.1_0a49ca19c14663e18124af78d052c30a8ef417f4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\xquan\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_dda341100a9e1279676df415e41b409d5436d492.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_a88e38e675ae3f1ef6b680b4a2564a3eddbc0715.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.1_93bcf0755d5aeb0744f6466ce0cf39efb91a3208.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.6.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0efd1b44f47c134fb245914a1d54a55adbfc2f8d">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-impl-9.6.1_c88bda943f22e436ece342529c80f2ea77028d6c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.6.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="af7582c6b327449c6d32518e6a10307860b7b5d6">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-9.6.1_992a8c5ff6c1109e320e6593f801e0b9c646a155.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-common\9.6.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="77558e74bb2056ef38516296f13a27c4c4fc3e5c">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-common-9.6.1_050f2dd502c564f58aad86b428951d1e9e74f118.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-module\9.6.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6ffe8b28ab61e5ee92ab9431a220379790c71ddf">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-module-9.6.1_3dbd070c6e566eb717f2f72b07619aea76f88fc5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.6.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="eccaaa9ffa6bb4bfbd2e870f01aaf69655d353be">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-9.6.1_95007a3faf828ebfca5afcc4a2f13de4d7de36d8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.1_6dd77e3151ade31ced84186f0011dd03925db70f.jar" />
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.2.1_a99eb84bb7d9887ad129e47a7e07d3b7e3680532.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.1_3f5a53c00d932a7c492b9bf3bf48f71ed9e78c61.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_2ee91497bf9f557a2918a23b8ca5ecdde35cc0b7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.1_a68cd10d4a9af4332bc63d6b21d44da43af77d8f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.1_85baa4eea9e9a03b091abffc491e036812f6c0b3.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.1_1d503535064e7d95df40f00ede4dc87e6603c170.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
         sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.1_d5d749a92e7ac9f9cd3049ee5cecd9adefbd4134.jar" />
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-24.2.1_96679ddedcece49a165a328413928590cc780891.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.6.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-common/9.8.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="1e14ebe1cda8491f152083e752ca5bf73cd37bff">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-iid-9.6.1_f7625af344179eafce223fa0d8e919b007acdbf1.jar" />
+        sha1="4438b1a7848a7c571122ba618aa1304514aabee6">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-common-9.8.0_445998b526ae6e79c53b6ee6ca7134719f95e113.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.6.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.8.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="4a36600281a648769411ef642c331851732bf29e">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-9.6.1_cf621eca250b82e14290eb6ff2b418410c6bc424.jar" />
+        sha1="9ff04cc3470178a44512624036751a803418c2ca">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-9.8.0_cc0510048dd85e44cae98173421de653084e4b10.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.8.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_e9dd7f6f5dba0dafd2c070e048c1633ef35a688a.jar" />
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-9.8.0_3b1015d011095ca23dd24e5cab98da2382f13229.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.6.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="2a18547ea91d258866d132c2a763185f15b01b25">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-9.6.1_dbcffacb95866a8500e924735de8c98204b98e58.jar" />
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.1_78b9f45425decbfc751dd2124a083c42f7759d00.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\9.6.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="1ef72e72bc0d05602c366582afa9439f58bb31d6">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-common-9.6.1_89d87656a4236c39e344afc25bd12d67fea4b3a6.jar" />
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-24.2.1_e2e056d6a171b30783705a667774af6781965594.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/9.8.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_cedd31246d4def850b4bb9234a936b6fc18cf116.jar" />
+        sha1="5f47ede9561595584dca71104baa0fecb36dda87">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-database-connection-9.8.0_7824f19596f46dc42a30f7bddbcd1622ecdd1db8.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.8.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_493be43ae9e5e44573924f85464934815d5ba792.jar" />
+        sha1="6b6f292b8b951dcf2ecf2b20853e3eabc7d65c48">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-iid-9.8.0_98b2d322f30c39d894eb4ee96348226ad77f82c6.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="15e59454416c6341bd3ed2533b585cd340682dd1">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-9.8.0_b0707250b7ef4b5783a2bbcfe3c074b89312418d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
         sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.1_3f97d4300030d97191afe7638226d56ce5223db1.jar" />
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-24.2.1_5f87ae1905621f1e989a5e59b350c3326625b34f.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\9.6.1\jars\classes.jar"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.2"
-        sha1="a1c351dc10b92d638da57f3a6513f87cfbdc9f83">
-        <dex dex="F:\Project\Ki1nam4\android\MakeYourTeam\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-9.6.1_6c4c6fe2d6d2ae45dd8e6ac0914ec438dcf16e5f.jar" />
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_b3e6f990341d7f5fdee95292a6e2c76bb8e878f7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c61641e333fa88da21758bab8cc28ee16604b05f">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-common-9.8.0_b21a6308bf49ec4d09a973d63b54becac16acb15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_0e07bf7243c5a03a67ca781afd5f2dab8e7a8638.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_3d26016ab278111b8d4b44dd48aa9aaac96308b6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/support-annotations-24.2.1_340a35c97bdf8143969945d3a0c08a5bc0fe2ebb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e92aadd0697922316d1395c1887a23aebec640a">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-9.8.0_0f86f935e451255096cbdad318b6d1d669ceb760.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="03df48d3713661d66ad024b1e406259a4c26fcac">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-database-9.8.0_0a4f0938af88fc3c42c43498fe225bf49abcc117.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.firebaseui/firebase-ui-database/0.4.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c76f6507a42aec274953e882bf3c49a570843ef5">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.firebaseui-firebase-ui-database-0.4.0_be5ab9a47fa7a2e7eb951b8d94a6a1d7af6d96f5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_14de9ff1b73a4b8af027f859b7b07d43fd38c858.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-24.2.1_5d9de95a02b2b90ad0c359d983074dc1cad4c5da.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.2.1_dd3352ffe277ebfed51aa9f9f97ee89674bc9eeb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-24.2.1_e0d91cf96095a431c11d85fae8655784b5a423f3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.2.1_824789a77fd0588fbabc6571f7ceb39add65fdf8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_fc498e1fad17cf952dcc1395a3bc758612e639b1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-module/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3f8f779a22cbb4c4d0759467a4f1011bb5252970">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-auth-module-9.8.0_575dedbf58d4d44971c641b5179e8f5cb5d7f2df.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="190a642ba16d1421296a4d794606279b80039c59">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-impl-9.8.0_e6c8f62d2df4601df52563782682fca3d41671f6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-design-24.2.1_01dcdec8bbdc29f68d280e95801d449144c1bb1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/de.hdodenhof-circleimageview-1.3.0_53371ec9211c9ca041ec4612b3bf7facb6ab9218.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.2.1_b210bb2fd472d7d640f1bbef2e9575dd18825d8c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.8.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="/Users/NgoChiHai/Documents/Tai lieu hoc/Lap trinh di dong/Do an/MakeYourTeam/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-9.8.0_5be0b73b7cd0a9692ef3fcf58abed6553c12512a.jar" />
     </item>
 
 </items>

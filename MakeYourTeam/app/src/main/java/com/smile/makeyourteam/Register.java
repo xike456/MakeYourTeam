@@ -15,6 +15,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.smile.makeyourteam.models.User;
+import com.smile.makeyourteam.server.Firebase;
 
 public class Register extends AppCompatActivity implements View.OnClickListener{
 
@@ -74,13 +79,20 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         progressDialog.setMessage("Registering user...");
         progressDialog.show();
 
-        MainActivity.getFirebaseAuth().createUserWithEmailAndPassword(email, password)
+        Firebase.firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "Registerd", Toast.LENGTH_SHORT).show();
                             progressDialog.hide();
+
+                            FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
+                            DatabaseReference myRef = Firebase.database.getReference("users");
+
+                            User userData = new User(user.getUid(), user.getDisplayName(), user.getEmail());
+                            myRef.child(user.getUid()).setValue(userData);
+
                             StartMainActivity();
                         }
                         else{

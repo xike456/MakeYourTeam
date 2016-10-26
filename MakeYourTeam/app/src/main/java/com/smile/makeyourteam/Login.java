@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.smile.makeyourteam.server.Firebase;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
 
@@ -84,7 +85,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         progressDialog.setMessage("Login ...");
         progressDialog.show();
 
-        MainActivity.getFirebaseAuth().signInWithEmailAndPassword(email, password)
+        Firebase.firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

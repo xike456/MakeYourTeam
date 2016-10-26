@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.smile.makeyourteam.server.Firebase;
 
 public class ForgetPassword extends AppCompatActivity implements View.OnClickListener{
     private EditText txtEmail;
@@ -52,7 +53,7 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
         progressDialog.setMessage("Sending email...");
         progressDialog.show();
 
-        MainActivity.getFirebaseAuth().sendPasswordResetEmail(email)
+        Firebase.firebaseAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
