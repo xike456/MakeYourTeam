@@ -63,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(ChatActivity.this,"Click",Toast.LENGTH_LONG).show();
                 DatabaseReference databaseRef = Firebase.database.getReference("message");
-                Message message = new Message(currentUserID, etMessage.getText().toString());
+                Message message = new Message(currentUserID, etMessage.getText().toString(),Firebase.firebaseAuth.getCurrentUser().getEmail());
                 etMessage.setText("");
                 databaseRef.child(codeString).push().setValue(message);
             }
@@ -81,7 +81,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder, Message message, int position) {
                 viewHolder.messageTextView.setText(message.message);
-                viewHolder.messengerTextView.setText(message.senderId);
+                viewHolder.messengerTextView.setText(message.email);
 //                if (message.getPhotoUrl() == null) {
 //                    viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,
 //                            R.drawable.ic_account_circle_black_36dp));

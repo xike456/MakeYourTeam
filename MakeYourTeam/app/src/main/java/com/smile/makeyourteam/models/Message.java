@@ -5,15 +5,17 @@ package com.smile.makeyourteam.models;
  */
 
 public class Message {
-    public  String senderId;
-    public  String message;
+    public String senderId;
+    public String message;
+    public String email;
 
     public Message(){
 
     }
 
-    public Message(String senderId, String message){
+    public Message(String senderId, String message, String email){
         this.senderId = senderId;
         this.message = message;
+        this.email = email;
     }
 }
