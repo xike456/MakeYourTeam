@@ -14,16 +14,42 @@
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/btnLogOut"
             android:text="LogOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <ListView
+        <Button
+            android:id="@+id/btnCreateGroup"
+            android:text="Create Group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lvUser"></ListView>
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:fillViewport="true">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lvUser"></ListView>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:fillViewport="true"
+            android:layout_weight="1">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lvGroup"></ListView>
+        </ScrollView>
+
     </LinearLayout>
 </RelativeLayout>

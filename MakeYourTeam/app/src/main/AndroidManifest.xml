@@ -20,7 +20,9 @@
         <activity android:name=".Login" />
         <activity android:name=".Register" />
         <activity android:name=".ForgetPassword" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".AddUsersToGroupActivity"></activity>
     </application>
 
 </manifest>

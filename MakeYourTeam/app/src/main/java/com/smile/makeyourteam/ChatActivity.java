@@ -32,6 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatActivity extends AppCompatActivity {
 
     Button btnSend;
+    Button btnAdd;
     RecyclerView rcvMessage;
     EditText etMessage;
 
@@ -44,20 +45,31 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         final String id_userReceive;
+        String id_Group = null;
 
         Intent i = getIntent();
         id_userReceive = i.getStringExtra(Config.ID_USER_LIST);
+
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
         final String sRef = currentUserID + "-" + id_userReceive;
         Integer code = 0;
         for (int j = 0;j<sRef.length();j++){
             code += sRef.charAt(j);
         }
-        final String codeString = code.toString();
+        String codeString = code.toString();
         btnSend = (Button) findViewById(R.id.btnSend);
+        btnAdd = (Button) findViewById(R.id.btnAdd);
+
         etMessage = (EditText)findViewById(R.id.etMessage);
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
 
+        if (id_userReceive == null) {
+            id_Group = i.getStringExtra(Config.ID_GROUP);
+            codeString = id_Group;
+            btnAdd.setVisibility(View.VISIBLE);
+        }
+
+        final String finalCodeString = codeString;
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +77,13 @@ public class ChatActivity extends AppCompatActivity {
                 DatabaseReference databaseRef = Firebase.database.getReference("message");
                 Message message = new Message(currentUserID, etMessage.getText().toString(),Firebase.firebaseAuth.getCurrentUser().getEmail());
                 etMessage.setText("");
-                databaseRef.child(codeString).push().setValue(message);
+                databaseRef.child(finalCodeString).push().setValue(message);
+            }
+        });
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -76,7 +94,7 @@ public class ChatActivity extends AppCompatActivity {
                 Message.class,
                 R.layout.item_message,
                 MessageViewHolder.class,
-                Firebase.database.getReference("message").child(codeString)) {
+                Firebase.database.getReference("message").child(finalCodeString)) {
 
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder, Message message, int position) {
@@ -92,6 +110,8 @@ public class ChatActivity extends AppCompatActivity {
 //                }
             }
         };
+
+
 
         mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -111,41 +131,5 @@ public class ChatActivity extends AppCompatActivity {
         rcvMessage.setLayoutManager(mLinearLayoutManager);
         rcvMessage.setAdapter(mFirebaseAdapter);
 
-//        DatabaseReference database = Firebase.database.getReference(sRef);
-//        database.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    User user = ds.getValue(User.class);
-//                    if(!user.id.contentEquals(Firebase.firebaseAuth.getCurrentUser().getUid())) {
-//                        uList.add(user);
-//                    }
-//                }
-//
-//                final ArrayList<String> emails = new ArrayList<String>();
-//                for (int i=0;i<uList.size();i++) {
-//                    emails.add(uList.get(i).email);
-//                }
-//
-//                adapterUser = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, emails);
-//                lvUser.setAdapter(adapterUser);
-//                lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        //Toast.makeText(MainActivity.this,emails.get(position),Toast.LENGTH_LONG).show();
-//                        Intent i = new Intent(MainActivity.this,ChatActivity.class);
-//                        i.putExtra(Config.ID_USER_LIST, uList.get(position).id);
-//                        startActivity(i);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
-
-
 }

@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.smile.makeyourteam.models.Group;
 import com.smile.makeyourteam.models.User;
 import com.smile.makeyourteam.server.Firebase;
 
@@ -38,9 +39,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private Button btnLogOut;
+    private Button btnCreateGroup;
     private ListView lvUser;
+    private ListView lvGroup;
     private List<User> uList = new ArrayList<User>();
+    private List<Group> groupList = new ArrayList<Group>();
     ArrayAdapter<String> adapterUser;
+    ArrayAdapter<String> adapterGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +53,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         btnLogOut = (Button) findViewById(R.id.btnLogOut);
+        btnCreateGroup = (Button) findViewById(R.id.btnCreateGroup);
         lvUser = (ListView) findViewById(R.id.lvUser);
+        lvGroup = (ListView) findViewById(R.id.lvGroup);
         btnLogOut.setOnClickListener(this);
+        btnCreateGroup.setOnClickListener(this);
 
-       // firebaseAuth = FirebaseAuth.getInstance();
+        // firebaseAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    myRef.child(user.getUid()).setValue(user.getEmail());
 
                     LoadUser();
+                    LoadGroups();
 
                     //Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                     Log.d("Authentication",  "onAuthStateChanged:signed_in:" + user.getUid());
@@ -73,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
-
-
     }
 
     @Override
@@ -82,7 +89,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v == btnLogOut)
         {
             logout();
+        } else if(v == btnCreateGroup)
+        {
+            CreateGroup();
         }
+    }
+
+    private void CreateGroup() {
+        Intent intent = new Intent(this, CreateGroupActivity.class);
+        startActivity(intent);
     }
 
     private void logout() {
@@ -137,6 +152,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //Toast.makeText(MainActivity.this,emails.get(position),Toast.LENGTH_LONG).show();
                         Intent i = new Intent(MainActivity.this,ChatActivity.class);
                         i.putExtra(Config.ID_USER_LIST, uList.get(position).id);
+                        startActivity(i);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    void LoadGroups(){
+        FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
+        DatabaseReference database = Firebase.database.getReference("users").child(user.getUid()).child("groups");
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                groupList.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Group group = ds.getValue(Group.class);
+                        groupList.add(group);
+                }
+
+                final ArrayList<String> group = new ArrayList<String>();
+                for (int i=0;i<groupList.size();i++) {
+                    group.add(groupList.get(i).groupName);
+                }
+
+                adapterGroup = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, group);
+
+                lvGroup.setAdapter(adapterGroup);
+                lvGroup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Toast.makeText(MainActivity.this,emails.get(position),Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(MainActivity.this,ChatActivity.class);
+                        i.putExtra(Config.ID_GROUP, groupList.get(position).id);
                         startActivity(i);
                     }
                 });

@@ -32,6 +32,13 @@
             android:text="SEND"
             android:id="@+id/btnSend"
             android:layout_gravity="bottom"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD"
+            android:id="@+id/btnAdd"
+            android:layout_gravity="bottom"
+            android:visibility="gone" />
 
     </LinearLayout>
 
