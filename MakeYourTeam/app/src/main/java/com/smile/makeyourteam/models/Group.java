@@ -2,6 +2,7 @@ package com.smile.makeyourteam.models;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import java.util.Map;
  * Created by mp_ng on 10/30/2016.
  */
 
-public class Group {
+public class Group implements Serializable {
     public String id;
     public String groupName;
 

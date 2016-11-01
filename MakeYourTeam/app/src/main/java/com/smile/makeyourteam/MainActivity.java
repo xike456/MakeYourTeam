@@ -31,6 +31,7 @@ import com.smile.makeyourteam.models.Group;
 import com.smile.makeyourteam.models.User;
 import com.smile.makeyourteam.server.Firebase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //Toast.makeText(MainActivity.this,emails.get(position),Toast.LENGTH_LONG).show();
                         Intent i = new Intent(MainActivity.this,ChatActivity.class);
+                        i.putExtra(Config.GROUP_INFO, (Serializable) groupList.get(position));
                         i.putExtra(Config.ID_GROUP, groupList.get(position).id);
                         startActivity(i);
                     }

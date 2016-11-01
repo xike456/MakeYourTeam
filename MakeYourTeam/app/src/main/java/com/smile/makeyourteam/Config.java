@@ -5,6 +5,7 @@ package com.smile.makeyourteam;
  */
 
 public class Config {
+    public static final String GROUP_INFO = "group_info";
     public static String ID_USER_LIST = "user_id";
     public static String ID_GROUP = "group_id";
 

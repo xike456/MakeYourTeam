@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.smile.makeyourteam.models.Group;
 import com.smile.makeyourteam.models.Message;
 import com.smile.makeyourteam.models.MessageViewHolder;
 import com.smile.makeyourteam.models.User;
@@ -38,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private LinearLayoutManager mLinearLayoutManager;
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
+    private Group groupInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
         String id_Group = null;
 
         Intent i = getIntent();
+        groupInfo = (Group) i.getSerializableExtra(Config.GROUP_INFO);
         id_userReceive = i.getStringExtra(Config.ID_USER_LIST);
 
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
@@ -58,7 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         }
         String codeString = code.toString();
         btnSend = (Button) findViewById(R.id.btnSend);
-        btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnAdd = (Button) findViewById(R.id.btnMember);
 
         etMessage = (EditText)findViewById(R.id.etMessage);
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
@@ -83,7 +86,9 @@ public class ChatActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent addUsersToGroupActivity = new Intent(ChatActivity.this, AddUsersToGroupActivity.class);
+                addUsersToGroupActivity.putExtra(Config.GROUP_INFO, groupInfo);
+                startActivity(addUsersToGroupActivity);
             }
         });
 

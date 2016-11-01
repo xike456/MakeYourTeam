@@ -35,8 +35,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ADD"
-            android:id="@+id/btnAdd"
+            android:text="MEMBER"
+            android:id="@+id/btnMember"
             android:layout_gravity="bottom"
             android:visibility="gone" />
 
