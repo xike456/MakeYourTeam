@@ -73,7 +73,11 @@ public class AddUsersToGroupActivity extends AppCompatActivity implements View.O
 
                 final ArrayList<String> emails = new ArrayList<String>();
                 for (int i = 0; i< uUsers.size(); i++) {
-                    emails.add(uUsers.get(i).email);
+                    if(uUsers.get(i).displayname == null){
+                        emails.add(uUsers.get(i).email);
+                    }else{
+                        emails.add(uUsers.get(i).displayname);
+                    }
                 }
 
                 adapterUser = new ArrayAdapter<String>(AddUsersToGroupActivity.this, android.R.layout.simple_list_item_multiple_choice, emails);
