@@ -40,18 +40,20 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayoutManager mLinearLayoutManager;
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
     private Group groupInfo;
+    private String nameUserReceive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
 
         final String id_userReceive;
         String id_Group = null;
-
         Intent i = getIntent();
         groupInfo = (Group) i.getSerializableExtra(Config.GROUP_INFO);
         id_userReceive = i.getStringExtra(Config.ID_USER_LIST);
+        nameUserReceive = i.getStringExtra(Config.NAME_USER_RECEIVE);
+        setTitle(nameUserReceive);
+        setContentView(R.layout.activity_chat);
 
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
         final String sRef = currentUserID + "-" + id_userReceive;
