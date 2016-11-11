@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MakeYourTeam.iml" filepath="$PROJECT_DIR$/MakeYourTeam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MakeYourTeamNewGUI.iml" filepath="$PROJECT_DIR$/MakeYourTeamNewGUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

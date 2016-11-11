@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">MakeYourTeam</string>
-    <string name="title_activity_chat">ChatActivity</string>
-    <string name="facebook_app_id">1358610977507170</string>
-    <string name="fb_login_protocol_scheme">fb1358610977507170</string>
+    <string name="app_name">Make Your Team</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="leave_group">Leave</string>
+    <string name="change_title">Change title</string>
+    <string name="Register">Register an account</string>
+    <string name="forgetPassword">Forget password?</string>
+    <string name="change_avatar">Change avatar</string>
+    <string name="PIN">Enter your team\'s PIN</string>
 </resources>
