@@ -11,7 +11,7 @@
         android:id="@+id/logo"
         android:src="@drawable/teamwork"
         android:layout_width="match_parent"
-        android:layout_height="140dp" />
+        android:layout_height="100dp" />
 
     <LinearLayout
         android:paddingTop="10dp"
@@ -19,7 +19,10 @@
         android:layout_below="@+id/logo"
         android:orientation="vertical"
         android:layout_width="280dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/layout_btn"
+        android:layout_marginBottom="70dp"
+        android:weightSum="1">
 
         <EditText
             android:paddingLeft="20dp"
@@ -45,30 +48,33 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
-        <Button
-            android:background="@drawable/button_gg_border"
-            android:layout_marginTop="10dp"
-            android:text="Login with Google"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/google_icon"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-        <Button
-            android:background="@drawable/button_fb_border"
-            android:layout_marginTop="10dp"
-            android:text="Login with Facebook"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/com_facebook_inverse_icon"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/login_google_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:visibility="visible"
+            android:background="@android:color/holo_red_light"/>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_facebook_button"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingBottom="11dp"
+            android:paddingTop="11dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="20dp">
         <TextView
             android:text="@string/Register"
-            android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:textStyle="italic"
             android:layout_width="match_parent"
@@ -77,7 +83,7 @@
 
         <TextView
             android:text="@string/forgetPassword"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:textStyle="italic"
             android:layout_width="match_parent"
