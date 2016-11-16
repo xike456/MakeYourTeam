@@ -74,23 +74,29 @@ public class ChatUserFragment extends Fragment {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = new User();
                 uList.clear();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     User user = ds.getValue(User.class);
                     if(!user.id.contentEquals(Firebase.firebaseAuth.getCurrentUser().getUid())) {
                         uList.add(user);
+                    }else{
+                        currentUser = user;
                     }
                 }
 
                 userAdapter = new UserAdapter(getActivity(), R.layout.user_item, uList);
 
                 lvUser.setAdapter(userAdapter);
+                final User finalCurrentUser = currentUser;
                 lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent i = new Intent(getContext(),ChatActivity.class);
-                        i.putExtra(Config.ID_USER_LIST, uList.get(position).id);
+                        i.putExtra(Config.ID_USER_REVEIVE, uList.get(position).id);
                         i.putExtra(Config.NAME_USER_RECEIVE,uList.get(position).displayName);
+                        i.putExtra(Config.USER_NAME,getUserName(finalCurrentUser));
+                        i.putExtra(Config.PHOTO_URL, finalCurrentUser.thumbnail);
                         startActivity(i);
                     }
                 });
@@ -101,5 +107,14 @@ public class ChatUserFragment extends Fragment {
 
             }
         });
+    }
+
+    private String getUserName(User user){
+        if(user.displayName!=null)
+            return user.displayName;
+        if(user.nickName!=null)
+            return user.nickName;
+
+        return user.email;
     }
 }

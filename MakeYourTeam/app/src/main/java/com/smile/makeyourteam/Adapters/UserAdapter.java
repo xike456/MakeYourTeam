@@ -43,7 +43,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         username.setText(user.displayName);
         nickName.setText(user.nickName);
 
-        if (user.thumbnail == null) {
+        if (user.thumbnail.length() == 0) {
             avatar.setImageDrawable(ContextCompat.getDrawable(getContext(),
                     R.drawable.ic_people_black_48dp));
         } else {

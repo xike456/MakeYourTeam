@@ -49,9 +49,9 @@ public class Notifications extends Service{
                     message = ds.getValue(Message.class);
                     break;
                 }
-
-                sendNotification(message);
-             //   Toast.makeText(getApplication(),message.messages,Toast.LENGTH_SHORT).show();
+                if(message.senderId != Firebase.firebaseAuth.getCurrentUser().getUid()){
+                    sendNotification(message);
+                }
             }
 
             @Override

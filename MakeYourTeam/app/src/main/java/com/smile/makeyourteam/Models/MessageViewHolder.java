@@ -13,14 +13,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
-    public TextView messageTextView;
-    public TextView messengerTextView;
-    public CircleImageView messengerImageView;
+    public TextView tvMessage, tvDisplayName, tvTimeSend;
+    public CircleImageView avatar;
 
     public MessageViewHolder(View v) {
         super(v);
-        messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
-        messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
-        messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
+        tvMessage = (TextView) itemView.findViewById(R.id.chatMessage);
+        tvDisplayName = (TextView) itemView.findViewById(R.id.username);
+        tvTimeSend = (TextView) itemView.findViewById(R.id.timeSend);
+        avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
     }
 }

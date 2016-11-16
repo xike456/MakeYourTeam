@@ -11,9 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
@@ -33,6 +31,7 @@ import com.smile.makeyourteam.Fragments.SettingsFragment;
 import com.smile.makeyourteam.Fragments.TaskManagerFragment;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
+import com.smile.makeyourteam.services.*;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -76,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
             }
         };
+
+        // start service notification
+        Intent service = new Intent(MainActivity.this, Notifications.class);
+        startService(service);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);

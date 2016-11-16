@@ -4,16 +4,16 @@
     android:id="@+id/activity_main"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:src="@drawable/drawer_top"
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="20dp"
         android:layout_width="45dp"
-        android:layout_height="45dp" />
+        android:layout_height="45dp"
+        android:id="@+id/avatar"/>
 
     <LinearLayout
         android:layout_marginTop="5dp"
