@@ -1,6 +1,7 @@
 package com.smile.makeyourteam.Adapters;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
 
@@ -39,7 +42,16 @@ public class UserAdapter extends ArrayAdapter<User> {
         final TextView nickName = (TextView) v.findViewById(R.id.userNickName);
         username.setText(user.displayName);
         nickName.setText(user.nickName);
-        avatar.setImageResource(user.thumbnail);
+
+        if (user.thumbnail == null) {
+            avatar.setImageDrawable(ContextCompat.getDrawable(getContext(),
+                    R.drawable.ic_people_black_48dp));
+        } else {
+            Glide.with(getContext())
+                    .load(user.thumbnail)
+                    .into(avatar);
+        }
+      //  avatar.setImageResource(user.thumbnail);
         return v;
     }
 }

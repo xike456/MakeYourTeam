@@ -6,10 +6,10 @@ package com.smile.makeyourteam.Models;
 
 public class User {
     public String id;
-    public String displayName;
+    public String displayName ="";
     public String nickName = "";
-    public String email;
-    public int thumbnail;
+    public String email ="";
+    public String thumbnail ="";
 
 
     public User() {
@@ -22,7 +22,7 @@ public class User {
         this.id = id;
     }
 
-    public User(String id, String displayName, String email, String nickName, int thumbnail) {
+    public User(String id, String displayName, String email, String nickName, String thumbnail) {
         this.displayName = displayName;
         this.nickName = nickName;
         this.email = email;

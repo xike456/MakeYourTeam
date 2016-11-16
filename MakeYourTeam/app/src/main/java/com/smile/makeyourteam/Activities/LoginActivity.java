@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
                                 if (!snapshot.exists()) {
-                                    User userData = new User(user.getUid(), user.getDisplayName(), user.getEmail());
+                                    User userData = new User(user.getUid(), user.getDisplayName(), "","",user.getPhotoUrl().toString());
                                     myRef.child(user.getUid()).setValue(userData);
                                 }
                             }
@@ -195,7 +195,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onDataChange(DataSnapshot snapshot) {
                                     if (!snapshot.exists()) {
-                                        User userData = new User(user.getUid(), user.getDisplayName(), user.getEmail());
+                                        User userData = new User(user.getUid(), user.getDisplayName(), user.getEmail(),"",user.getPhotoUrl().toString());
+
                                         myRef.child(user.getUid()).setValue(userData);
                                     }
                                 }
