@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -18,6 +19,7 @@ import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.Models.MessageViewHolder;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
+import com.smile.makeyourteam.services.Notifications;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,6 +41,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        Notifications.isChatSctivityLaunch = true;
 
         // get user receive
         final String id_userReceive;
@@ -165,6 +169,21 @@ public class ChatActivity extends AppCompatActivity {
 
         rcvMessage.setLayoutManager(mLinearLayoutManager);
         rcvMessage.setAdapter(mFirebaseAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+      //  Toast.makeText(this,"chat ondestroy",Toast.LENGTH_LONG).show();
+
+        Notifications.isChatSctivityLaunch = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       // Toast.makeText(this,"chat onpause",Toast.LENGTH_LONG).show();
+        Notifications.isChatSctivityLaunch = false;
     }
 
     public String timestampToHour(long timestamp){

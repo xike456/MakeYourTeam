@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".services.Notifications"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -46,7 +46,10 @@
         <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.JoinTeamActivity" />
         <activity android:name=".Activities.WelcomeActivity" />
-        <activity android:name=".Activities.CreateTeamActivity"></activity>
+        <activity android:name=".Activities.CreateTeamActivity"/>
+
+        <service android:name=".services.Notifications"/>
+
     </application>
 
 </manifest>

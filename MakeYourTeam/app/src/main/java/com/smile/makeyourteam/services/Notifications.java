@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.smile.makeyourteam.Activities.ChatActivity;
-import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.R;
@@ -28,12 +27,17 @@ import com.smile.makeyourteam.server.Firebase;
  */
 
 public class Notifications extends Service{
+
+    private int count;
+    public static Boolean isChatSctivityLaunch;
     @Override
     public void onCreate() {
         super.onCreate();
 
-        DatabaseReference mRef = Firebase.database.getReference().child("message");
+        count = 0;
+        isChatSctivityLaunch = false;
 
+        DatabaseReference mRef = Firebase.database.getReference().child("message");
         mRef.keepSynced(true);
 
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -47,16 +51,16 @@ public class Notifications extends Service{
                 Message message = new Message();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     message = ds.getValue(Message.class);
-                    break;
                 }
-                if(message.senderId != Firebase.firebaseAuth.getCurrentUser().getUid()){
+
+                if(message.receiveId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && isChatSctivityLaunch == false){
                     sendNotification(message);
                 }
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplication(),"Remove",Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -87,21 +91,21 @@ public class Notifications extends Service{
 
     private void sendNotification(Message message) {
         Intent i = new Intent(this, ChatActivity.class);
-        i.putExtra(Config.ID_USER_REVEIVE, message.receiveId);
-        i.putExtra(Config.NAME_USER_RECEIVE, message.nameUserReceive);
-        i.putExtra(Config.USER_NAME,message.userName);
-        i.putExtra(Config.PHOTO_URL, message.photoUrl);
-        startActivity(i);
+        i.putExtra(Config.ID_USER_REVEIVE, message.senderId);
+        i.putExtra(Config.NAME_USER_RECEIVE, message.userName);
+        i.putExtra(Config.USER_NAME,message.nameUserReceive);
+        i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       // startActivity(i);
 
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, i,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.drawer_top)
                 .setContentTitle("MakeYourTeam")
-                .setContentText("New message")
+                .setContentText(message.messages)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

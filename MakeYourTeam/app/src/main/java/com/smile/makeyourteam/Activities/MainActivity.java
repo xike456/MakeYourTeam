@@ -24,14 +24,14 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.smile.makeyourteam.Fragments.ChatGroupFragment;
+import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Fragments.ChatManagerFragment;
 import com.smile.makeyourteam.Fragments.HomeFragment;
 import com.smile.makeyourteam.Fragments.SettingsFragment;
 import com.smile.makeyourteam.Fragments.TaskManagerFragment;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
-import com.smile.makeyourteam.services.*;
+import com.smile.makeyourteam.services.Notifications;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         };
 
         // start service notification
-        Intent service = new Intent(MainActivity.this, Notifications.class);
+        Intent service = new Intent(MainActivity.this,  Notifications.class);
         startService(service);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
