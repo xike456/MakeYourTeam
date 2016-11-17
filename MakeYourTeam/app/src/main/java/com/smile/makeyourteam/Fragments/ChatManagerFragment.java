@@ -1,9 +1,12 @@
 package com.smile.makeyourteam.Fragments;
 
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,8 +62,17 @@ public class ChatManagerFragment extends Fragment {
                     LoadGroupChatView();
                 }
                 return true;
+            case R.id.mnNewGroup:
+                showDialogNewGroup();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialogNewGroup() {
+        FragmentManager fm = ((AppCompatActivity) getContext()).getSupportFragmentManager();
+        CreateGroupDialogFragment newFragment = new CreateGroupDialogFragment();
+        newFragment.show(fm, "New group fragment");
     }
 
     private void LoadUserChatView() {

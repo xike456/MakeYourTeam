@@ -9,11 +9,14 @@
         android:icon="@drawable/ic_people_white_24dp"
         android:title="Refresh"/>
     <item
-        android:title="Add members"
+        android:id="@+id/mnNewGroup"
+        android:title="New group"
         android:orderInCategory="100">
     </item>
     <item
-        android:title="Remove members"
-        android:orderInCategory="101">
+        android:title="Logout"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:id="@+id/logout">
     </item>
 </menu>
