@@ -6,9 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -112,9 +116,18 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        final LinearLayout.LayoutParams paramsMsgRight = new LinearLayout.
+                LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsMsgRight.gravity = Gravity.RIGHT;
+
+        final LinearLayout.LayoutParams paramsMsgLeft = new LinearLayout.
+                LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsMsgLeft.gravity = Gravity.LEFT;
+
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setStackFromEnd(true);
-
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(
                 Message.class,
                 R.layout.chat_item,
@@ -137,9 +150,15 @@ public class ChatActivity extends AppCompatActivity {
 //                    viewHolder.messengerTextView.setText(message.email);
 //                }
 
-                viewHolder.tvDisplayName.setText(message.userName);
-                viewHolder.tvTimeSend.setText(timestampToHour(message.timestamp));
-                viewHolder.tvMessage.setText(message.messages);
+                if(message.senderId.equals(currentUserID)){
+                    viewHolder.tvMessage.setBackgroundResource(R.drawable.in_message_bg);
+                    viewHolder.avatar.setVisibility(View.INVISIBLE);
+                    viewHolder.layoutUsername.setLayoutParams(paramsMsgRight);
+                }else {
+                    viewHolder.tvMessage.setBackgroundResource(R.drawable.out_message_bg);
+                    viewHolder.avatar.setVisibility(View.VISIBLE);
+                    viewHolder.layoutUsername.setLayoutParams(paramsMsgLeft);
+                }
 
                 if (message.photoUrl.length() == 0) {
                     viewHolder.avatar.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
@@ -149,6 +168,15 @@ public class ChatActivity extends AppCompatActivity {
                             .load(message.photoUrl)
                             .into(viewHolder.avatar);
                 }
+                if(message.senderId.equals(currentUserID)){
+                    viewHolder.layoutChat.setLayoutParams(paramsMsgRight);
+                }else {
+                    viewHolder.layoutChat.setLayoutParams(paramsMsgLeft);
+                }
+
+                viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
+               // viewHolder.tvTimeSend.setText(timestampToHour(message.timestamp));
+                viewHolder.tvMessage.setText(message.messages);
             }
         };
 

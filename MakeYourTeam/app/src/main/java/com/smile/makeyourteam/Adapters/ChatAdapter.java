@@ -38,8 +38,8 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         Message chat = messages.get(position);
         final TextView username = (TextView) v.findViewById(R.id.username);
         username.setText(chat.userName);
-        final TextView time = (TextView) v.findViewById(R.id.timeSend);
-        time.setText(timestampToHour(chat.timestamp));
+        //final TextView time = (TextView) v.findViewById(R.id.timeSend);
+       // time.setText(timestampToHour(chat.timestamp));
         final TextView chatMessage = (TextView) v.findViewById(R.id.chatMessage);
         chatMessage.setText(chat.messages);
 
