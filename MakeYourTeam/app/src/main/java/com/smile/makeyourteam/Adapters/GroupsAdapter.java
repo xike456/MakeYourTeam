@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.smile.makeyourteam.Activities.AddMemberActivity;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Config;
@@ -35,6 +36,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
 
     private Context mContext;
     private List<Group> groups;
+    private int position;
 
     public GroupsAdapter(Context mContext, List<Group> groups) {
         this.mContext = mContext;
@@ -95,6 +97,14 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
                     return true;
                 case R.id.leave_group:
                     return true;
+                case R.id.add_member:
+                    Intent intent = new Intent(mContext, AddMemberActivity.class);
+                    intent.putExtra(Config.ID_GROUP, groups.get(position).id);
+                    intent.putExtra(Config.NAME_GROUP, groups.get(position).title);
+                    mContext.startActivity(intent);
+                    return true;
+                case R.id.change_title_group:
+                    return true;
                 default:
             }
             return false;
@@ -116,6 +126,14 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
             timeStamp = (TextView) view.findViewById(R.id.txtTimeStamp);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
+
+            overflow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    position = getLayoutPosition();
+                }
+            });
+
             thumbnail.setOnClickListener(this);
         }
 

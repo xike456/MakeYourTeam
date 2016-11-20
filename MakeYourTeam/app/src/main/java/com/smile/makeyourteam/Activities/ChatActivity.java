@@ -58,6 +58,7 @@ public class ChatActivity extends AppCompatActivity {
         nameUserReceive = i.getStringExtra(Config.NAME_USER_RECEIVE);
         userName = i.getStringExtra(Config.USER_NAME);
         photoUrl = i.getStringExtra(Config.PHOTO_URL);
+
         if (nameUserReceive == null) {
             isGroupChat = true;
             idGroup = i.getStringExtra(Config.ID_GROUP);
@@ -70,6 +71,7 @@ public class ChatActivity extends AppCompatActivity {
         } else  {
             setTitle(nameUserReceive);
         }
+
         setContentView(R.layout.activity_chat);
 
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
@@ -85,6 +87,7 @@ public class ChatActivity extends AppCompatActivity {
         if (isGroupChat) {
             codeString = idGroup;
         }
+
         btnSend = (Button) findViewById(R.id.btnSend);
 
         etMessage = (EditText)findViewById(R.id.etMessage);
@@ -123,7 +126,12 @@ public class ChatActivity extends AppCompatActivity {
                 }
                // Firebase.database.getReference("message").child(finalCodeString).child(key[0]).removeValue();
                 DatabaseReference databaseRef = Firebase.database.getReference("message");
-                Message message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, id_userReceive, photoUrl, nameUserReceive);
+                Message message;
+                if(isGroupChat){
+                    message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, "", photoUrl, "");
+                }else {
+                    message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, id_userReceive, photoUrl, nameUserReceive);
+                }
                 etMessage.setText("");
                 databaseRef.child(finalCodeString).push().setValue(message);
                 key[0]="";
@@ -166,23 +174,24 @@ public class ChatActivity extends AppCompatActivity {
 //                }
 
                 if(message.senderId.equals(currentUserID)){
-                    viewHolder.tvMessage.setBackgroundResource(R.drawable.in_message_bg);
+                    viewHolder.avatar.setImageDrawable(null);
                     viewHolder.avatar.setVisibility(View.INVISIBLE);
+                    viewHolder.tvMessage.setBackgroundResource(R.drawable.in_message_bg);
                     viewHolder.layoutUsername.setLayoutParams(paramsMsgRight);
                 }else {
-                    viewHolder.tvMessage.setBackgroundResource(R.drawable.out_message_bg);
+                    if (message.photoUrl.length() == 0) {
+                        viewHolder.avatar.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
+                                R.drawable.ic_people_black_48dp));
+                    } else {
+                        Glide.with(ChatActivity.this)
+                                .load(message.photoUrl)
+                                .into(viewHolder.avatar);
+                    }
                     viewHolder.avatar.setVisibility(View.VISIBLE);
+                    viewHolder.tvMessage.setBackgroundResource(R.drawable.out_message_bg);
                     viewHolder.layoutUsername.setLayoutParams(paramsMsgLeft);
                 }
 
-                if (message.photoUrl.length() == 0) {
-                    viewHolder.avatar.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
-                            R.drawable.ic_people_black_48dp));
-                } else {
-                    Glide.with(ChatActivity.this)
-                            .load(message.photoUrl)
-                            .into(viewHolder.avatar);
-                }
                 if(message.senderId.equals(currentUserID)){
                     viewHolder.layoutChat.setLayoutParams(paramsMsgRight);
                 }else {

@@ -48,7 +48,8 @@
 
         <service android:name=".services.Notifications" />
 
-        <activity android:name=".Activities.ForgetPasswordActivity"></activity>
+        <activity android:name=".Activities.ForgetPasswordActivity" />
+        <activity android:name=".Activities.AddMemberActivity"></activity>
     </application>
 
 </manifest>

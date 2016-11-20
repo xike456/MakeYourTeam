@@ -11,7 +11,12 @@
         android:title="@string/change_title" />
 
     <item
-        android:id="@+id/leave_group"
+        android:id="@+id/add_member"
         android:orderInCategory="102"
+        android:title="@string/add_member" />
+
+    <item
+        android:id="@+id/leave_group"
+        android:orderInCategory="103"
         android:title="@string/leave_group" />
 </menu>
