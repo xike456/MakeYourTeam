@@ -1,6 +1,7 @@
 package com.smile.makeyourteam.Fragments;
 
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -13,10 +14,21 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.smile.makeyourteam.Activities.ChatActivity;
+import com.smile.makeyourteam.Adapters.UserAdapter;
+import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Models.Group;
 import com.smile.makeyourteam.Adapters.GroupsAdapter;
+import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
+import com.smile.makeyourteam.server.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,17 +68,29 @@ public class ChatGroupFragment extends Fragment {
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(2), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-
         loadGroups();
     }
 
     private void loadGroups() {
-        groups.add(new Group("DEV TEAM","2 minutes ago", "Phu, Quang", R.drawable.drawer_top));
-        groups.add(new Group("QC TEAM","2 minutes ago", "Phu, Hai", R.drawable.ic_people_black_48dp));
-        groups.add(new Group("DESIGN TEAM","2 minutes ago", "Vu, Quang", R.drawable.ic_people_black_48dp));
-        groups.add(new Group("CI TEAM","10 minutes ago", "Linh, Phu ...", R.drawable.ic_people_black_48dp));
-        groups.add(new Group("SP TEAM","5 minutes ago", "Phu, Vu...", R.drawable.ic_people_black_48dp));
-        adapter.notifyDataSetChanged();
+        DatabaseReference mDatabase = Firebase.database.getReference();
+        FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
+        DatabaseReference mRef = mDatabase.child("users").child(mUser.getUid()).child("groups");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                groups.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Group group = ds.getValue(Group.class);
+                    groups.add(group);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

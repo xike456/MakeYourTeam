@@ -22,6 +22,7 @@
         android:layout_height="match_parent">
 
         <EditText
+            android:id="@+id/txtEmail"
             android:paddingLeft="20dp"
             android:inputType="text"
             android:background="@drawable/editbox_border"
@@ -30,6 +31,7 @@
             android:layout_height="35dp" />
 
         <EditText
+            android:id="@+id/txtPassword"
             android:layout_marginTop="10dp"
             android:paddingLeft="20dp"
             android:background="@drawable/editbox_border"

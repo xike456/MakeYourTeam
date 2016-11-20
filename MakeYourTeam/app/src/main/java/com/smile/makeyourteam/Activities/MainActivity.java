@@ -1,5 +1,6 @@
 package com.smile.makeyourteam.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -24,11 +25,16 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Fragments.ChatManagerFragment;
 import com.smile.makeyourteam.Fragments.HomeFragment;
 import com.smile.makeyourteam.Fragments.SettingsFragment;
 import com.smile.makeyourteam.Fragments.TaskManagerFragment;
+import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 import com.smile.makeyourteam.services.Notifications;
@@ -41,10 +47,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressDialog progressDialog;
+    public static User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading team...");
+        progressDialog.show();
+
+
         // init FacebookSDK
         FacebookSdk.sdkInitialize(getApplicationContext());
         // Configure Google Sign In
@@ -65,8 +79,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
                 if (user != null) {
-                   // LoadUser();
+                    // LoadUser();
                     // LoadGroups();
+                    getCurrentUser();
+                    checkTeamExist();
                     Log.d("Authentication",  "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
@@ -115,6 +131,49 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             }
         });
+    }
+
+    private void getCurrentUser() {
+        FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
+        DatabaseReference database = Firebase.database.getReference("users");
+        database.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void checkTeamExist() {
+        FirebaseUser currentUser = Firebase.firebaseAuth.getCurrentUser();
+        DatabaseReference database = Firebase.database.getReference("users")
+                .child(currentUser.getUid()).child("teamId");
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String teamId = (String) dataSnapshot.getValue();
+                progressDialog.hide();
+                if (teamId == null || teamId.isEmpty()) {
+                    startJoinTeam();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void startJoinTeam() {
+        Intent startJoinTeamActivity = new Intent(MainActivity.this, JoinTeamActivity.class);
+        startActivity(startJoinTeamActivity);
+        this.finish();
     }
 
     @Override

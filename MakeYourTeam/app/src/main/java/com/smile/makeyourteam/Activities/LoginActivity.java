@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Button btnLogin;
     private TextView btnRegister;
+    private TextView btnForget;
+    private EditText txtEmail;
+    private EditText txtPassword;
 
     private CallbackManager callbackManager;
     private LoginButton fbLoginButton;
@@ -106,9 +111,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (TextView) findViewById(R.id.txtRegister);
+        btnForget = (TextView) findViewById(R.id.txtForgetPass);
+        txtEmail = (EditText) findViewById(R.id.editEmailLogin);
+        txtPassword = (EditText) findViewById(R.id.editPasswordLogin);
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
+        btnForget.setOnClickListener(this);
     }
 
 
@@ -125,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In failed
-               // Toast.makeText(LoginActivity.this, "Logged in by Google fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Logged in by Google fail", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -141,12 +150,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == btnLogin) {
-            Intent mainActivity = new Intent(this, MainActivity.class);
-            startActivity(mainActivity);
+            Login();
         } else if (view == btnRegister) {
-            Intent registerActivity = new Intent(this, RegisterActivity.class);
-            startActivity(registerActivity);
+            startRegisterAccount();
+        } else if (view == btnForget) {
+            startForgetPass();
         }
+    }
+
+    private void startForgetPass() {
+        Intent i = new Intent(this, ForgetPasswordActivity.class);
+        startActivity(i);
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -174,6 +188,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         startMainActivity();
                         if (!task.isSuccessful()) {
                            // Toast.makeText(LoginActivity.this, "Logged in by Facebook fail", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void Login() {
+        String email = txtEmail.getText().toString().trim();
+        String password = txtPassword.getText().toString().trim();
+
+        if(TextUtils.isEmpty(email)){
+            //
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+            //
+            return;
+        }
+        progressDialog.setMessage("Login ...");
+        progressDialog.show();
+
+        Firebase.firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                            progressDialog.hide();
+                            startMainActivity();
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, "log in fail", Toast.LENGTH_SHORT).show();
+                            progressDialog.hide();
                         }
                     }
                 });
@@ -220,6 +269,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void signInGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    void startRegisterAccount() {
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
+        finish();
     }
 
 }

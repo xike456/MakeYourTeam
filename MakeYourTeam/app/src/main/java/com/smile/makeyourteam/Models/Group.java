@@ -1,51 +1,37 @@
 package com.smile.makeyourteam.Models;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by mpnguyen on 09/11/2016.
  */
 
 public class Group {
-    private String title;
-    private String timeStamp;
-    private String members;
-    private int thumbnail;
+    public String id = "";
+    public String title = "";
+    public long timestamp;
+    public String thumbnail = "";
 
-    public Group(String title, String timeStamp, String members, int thumbnail) {
+    public Group () { }
+
+    public Group(String id, String title, long timeStamp, String thumbnail) {
+        this.id = id;
         this.title = title;
-        this.timeStamp = timeStamp;
-        this.members = members;
+        this.timestamp = timeStamp;
         this.thumbnail = thumbnail;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public String getMembers() {
-        return members;
-    }
-
-    public String getTimeStamp() {
-        return timeStamp;
-    }
-
-    public int getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setMembers(String members) {
-        this.members = members;
-    }
-
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("title", title);
+        result.put("timestamp", timestamp);
+        result.put("thumbnail", thumbnail);
+        return result;
     }
 }

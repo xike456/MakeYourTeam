@@ -40,6 +40,9 @@ public class ChatActivity extends AppCompatActivity {
     private String nameUserReceive;
     private String userName;
     private String photoUrl;
+    private boolean isGroupChat = false;
+    private String idGroup;
+    private String nameGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,18 @@ public class ChatActivity extends AppCompatActivity {
         nameUserReceive = i.getStringExtra(Config.NAME_USER_RECEIVE);
         userName = i.getStringExtra(Config.USER_NAME);
         photoUrl = i.getStringExtra(Config.PHOTO_URL);
+        if (nameUserReceive == null) {
+            isGroupChat = true;
+            idGroup = i.getStringExtra(Config.ID_GROUP);
+            nameGroup = i.getStringExtra(Config.NAME_GROUP);
+        }
 
         // set title
-        setTitle(nameUserReceive);
+        if(isGroupChat) {
+            setTitle(nameGroup);
+        } else  {
+            setTitle(nameUserReceive);
+        }
         setContentView(R.layout.activity_chat);
 
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
@@ -70,6 +82,9 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         String codeString = code.toString();
+        if (isGroupChat) {
+            codeString = idGroup;
+        }
         btnSend = (Button) findViewById(R.id.btnSend);
 
         etMessage = (EditText)findViewById(R.id.etMessage);

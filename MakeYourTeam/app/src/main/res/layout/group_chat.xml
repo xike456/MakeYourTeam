@@ -26,18 +26,28 @@
                 android:src="@drawable/ic_people_black_48dp"
                 android:scaleType="fitCenter" />
 
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_below="@+id/thumbnail"
+                android:id="@+id/separateLine"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/thumbnail"
+                android:layout_below="@+id/separateLine"
                 android:text="DEV TEAM"
                 android:textAlignment="center"
                 android:paddingLeft="@dimen/group_chat_title_padding"
                 android:paddingRight="@dimen/group_chat_title_padding"
                 android:paddingTop="@dimen/group_chat_title_padding"
                 android:textColor="@color/black"
-                android:textSize="@dimen/album_title" />
+                android:textSize="@dimen/title" />
 
             <TextView
                 android:id="@+id/txtTimeStamp"
@@ -49,29 +59,7 @@
                 android:paddingBottom="@dimen/time_stamp_padding_bottom"
                 android:paddingLeft="@dimen/group_chat_title_padding"
                 android:paddingRight="@dimen/group_chat_title_padding"
-                android:textSize="@dimen/songs_count" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_below="@+id/txtTimeStamp"
-                android:id="@+id/separateLine"
-                android:layout_height="0.5dp"
-                android:background="@android:color/darker_gray" />
-
-
-            <TextView
-                android:id="@+id/txtMembers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/separateLine"
-                android:textAlignment="center"
-                android:text="text"
-                android:paddingLeft="@dimen/group_chat_title_padding"
-                android:paddingRight="@dimen/group_chat_title_padding"
-                android:paddingTop="@dimen/group_chat_title_padding"
-                android:paddingBottom="@dimen/group_chat_member_padding_bottom"
-                android:textColor="@color/black"
-                android:textSize="@dimen/album_title" />
+                android:textSize="@dimen/timestamps" />
 
             <ImageView
                 android:id="@+id/overflow"
