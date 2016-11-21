@@ -19,8 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.smile.makeyourteam.Adapters.GroupsAdapter;
 import com.smile.makeyourteam.Models.Group;
-import com.smile.makeyourteam.Adapters.GroupAdapter;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 
@@ -33,7 +33,7 @@ import java.util.List;
 public class ChatGroupFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private GroupAdapter adapter;
+    private GroupsAdapter adapter;
     private List<Group> groups;
 
     public ChatGroupFragment() {
@@ -55,7 +55,7 @@ public class ChatGroupFragment extends Fragment {
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
 
         groups = new ArrayList<>();
-        adapter = new GroupAdapter(getContext(), groups);
+        adapter = new GroupsAdapter(getContext(), groups);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
