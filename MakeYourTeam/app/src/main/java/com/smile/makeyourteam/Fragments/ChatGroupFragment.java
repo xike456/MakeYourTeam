@@ -1,7 +1,6 @@
 package com.smile.makeyourteam.Fragments;
 
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -14,19 +13,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.smile.makeyourteam.Activities.ChatActivity;
-import com.smile.makeyourteam.Adapters.UserAdapter;
-import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Models.Group;
-import com.smile.makeyourteam.Adapters.GroupsAdapter;
-import com.smile.makeyourteam.Models.User;
+import com.smile.makeyourteam.Adapters.GroupAdapter;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 
@@ -39,7 +33,7 @@ import java.util.List;
 public class ChatGroupFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private GroupsAdapter adapter;
+    private GroupAdapter adapter;
     private List<Group> groups;
 
     public ChatGroupFragment() {
@@ -61,7 +55,7 @@ public class ChatGroupFragment extends Fragment {
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
 
         groups = new ArrayList<>();
-        adapter = new GroupsAdapter(getContext(), groups);
+        adapter = new GroupAdapter(getContext(), groups);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
