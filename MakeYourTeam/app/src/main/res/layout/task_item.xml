@@ -19,20 +19,31 @@
             android:layout_height="match_parent">
 
            <TextView
-               android:id="@+id/txtTaskName"
+               android:id="@+id/txtTaskTitle"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="Task 1: New task"
                android:background="?attr/selectableItemBackgroundBorderless"
                android:layout_alignParentTop="true"
                android:layout_alignParentLeft="true"
+               android:textColor="@color/black"
                android:textStyle="bold"
                android:layout_marginBottom="5dp"
                android:textSize="20dp"/>
 
             <TextView
+                android:id="@+id/txtAssignTo"
+                android:layout_below="@+id/txtTaskTitle"
+                android:layout_width="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_height="wrap_content"
+                android:text="minhphu.it"
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
+
+            <TextView
                 android:id="@+id/txtTaskRemaining"
-                android:layout_below="@+id/txtTaskName"
+                android:layout_below="@+id/txtAssignTo"
                 android:layout_width="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_height="wrap_content"

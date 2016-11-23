@@ -13,4 +13,5 @@ public class Config {
     public static String PHOTO_URL = "photo_url";
     public static String PIN_TEAM = "pin_team";
     public static final String NAME_GROUP = "name_group";
+    public static String TASK_OBJECT = "task_object";
 }

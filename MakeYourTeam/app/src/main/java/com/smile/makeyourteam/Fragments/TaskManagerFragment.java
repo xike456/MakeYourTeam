@@ -23,10 +23,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Activities.TaskActivity;
 import com.smile.makeyourteam.Adapters.TaskAdapter;
 import com.smile.makeyourteam.Models.Task;
 import com.smile.makeyourteam.R;
+import com.smile.makeyourteam.server.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,18 +75,53 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        loadTasks();
-
+        if (!MainActivity.teamId.isEmpty()) {
+            loadTasks();
+        } else {
+            loadTeamInfo();
+        }
         btnAddTask.setOnClickListener(this);
     }
 
-    private void loadTasks() {
+    private void loadTeamInfo() {
+        FirebaseUser currentUser = Firebase.firebaseAuth.getCurrentUser();
+        DatabaseReference database = Firebase.database.getReference("users")
+                .child(currentUser.getUid()).child("teamId");
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String team = (String) dataSnapshot.getValue();
+                MainActivity.teamId = team;
+                loadTasks();
+            }
 
-        taskList.add(new Task("" ,"Task 1: Design UI", "", 2, 3, 3));
-        taskList.add(new Task("" ,"Task 2: Implement code", "", 2, 3, 3));
-        taskList.add(new Task("" ,"Task 3: QC", "", 2, 2, 3));
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public void loadTasks() {
+
+        DatabaseReference mDatabase = Firebase.database.getReference()
+                .child("teams").child(MainActivity.teamId).child("tasks");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                taskList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Task task = ds.getValue(Task.class);
+                    taskList.add(task);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -109,11 +151,11 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (i == 0) {
-            Toast.makeText(getContext(), "New", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "New", Toast.LENGTH_SHORT).show();
         } else if (i == 1) {
-            Toast.makeText(getContext(), "Active", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Active", Toast.LENGTH_SHORT).show();
         } else if (i == 2) {
-            Toast.makeText(getContext(), "Close", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Close", Toast.LENGTH_SHORT).show();
         }
     }
 

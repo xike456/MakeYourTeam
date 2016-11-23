@@ -9,88 +9,105 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/bgViewTabs"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="com.smile.makeyourteam.Activities.TaskActivity">
 
 
-    <LinearLayout
-        android:id="@+id/layout_edit"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+    <ScrollView
         android:layout_above="@+id/layoutButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_marginTop="15dp"
-            android:text="Task name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/layout_edit"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text=""
-            android:hint="Task name..."
-            android:ems="10"
-            android:id="@+id/editTaskName" />
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="Task name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="15dp"
-            android:text="Assign to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:hint="Task name..."
+                android:ems="10"
+                android:id="@+id/editTaskTitle" />
 
-        <Spinner
-            android:id="@+id/spinnerAssignTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="Assign to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="15dp"
-            android:text="Original Estimate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinnerAssignTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text=""
-            android:hint="(hours)"
-            android:ems="10"
-            android:id="@+id/editEstimateTime" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="State"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="15dp"
-            android:text="Remaining"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinnerState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text=""
-            android:hint="(hours)"
-            android:ems="10"
-            android:id="@+id/editRemainingTime" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="Original Estimate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="15dp"
-            android:text="Completed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text=""
+                android:hint="(hours)"
+                android:ems="10"
+                android:id="@+id/editEstimateTime" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text=""
-            android:hint="(hours)"
-            android:ems="10"
-            android:id="@+id/editCompletedTime" />
-    </LinearLayout>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="Remaining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text=""
+                android:hint="(hours)"
+                android:ems="10"
+                android:id="@+id/editRemainingTime" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:text="Completed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text=""
+                android:hint="(hours)"
+                android:ems="10"
+                android:id="@+id/editCompletedTime" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/layoutButton"
@@ -101,6 +118,7 @@
         android:layout_centerHorizontal="true">
 
         <Button
+            android:id="@+id/btnSaveTask"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,6 +128,7 @@
             android:layout_weight="1"/>
 
         <Button
+            android:id="@+id/btnCancelTask"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
