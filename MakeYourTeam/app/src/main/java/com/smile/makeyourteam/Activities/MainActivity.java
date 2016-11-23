@@ -39,6 +39,9 @@ import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 import com.smile.makeyourteam.services.Notifications;
 
+import java.util.Locale;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private TabLayout tabLayout;

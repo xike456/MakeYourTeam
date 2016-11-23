@@ -1,5 +1,8 @@
 package com.smile.makeyourteam.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mpnguyen on 10/11/2016.
  */
@@ -11,7 +14,6 @@ public class User {
     public String email ="";
     public String teamId ="";
     public String thumbnail ="";
-
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)

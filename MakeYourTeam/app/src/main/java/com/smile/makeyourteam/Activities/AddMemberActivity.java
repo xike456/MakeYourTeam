@@ -1,6 +1,8 @@
 package com.smile.makeyourteam.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,13 +59,10 @@ public class AddMemberActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SparseBooleanArray checked = lvMember.getCheckedItemPositions();
+                List<Boolean> checked = userAdapter.positionChecked;
                 for (int i = 0; i < checked.size(); i++) {
-                   // Item position in adapter
-                    int position = checked.keyAt(i);
-                    // Add sport if it is checked i.e.) == TRUE!
-                    if (checked.valueAt(i)){
-                        addMemberToGroup(groupName, groupID, uList.get(position).id);
+                    if (checked.get(i)){
+                        addMemberToGroup(groupName, groupID, uList.get(i).id);
                     }
                 }
             }
@@ -77,15 +77,29 @@ public class AddMemberActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 uList.clear();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    User user = ds.getValue(User.class);
-                    if(!user.id.contentEquals(Firebase.firebaseAuth.getCurrentUser().getUid())) {
-                        uList.add(user);
-                    }
+                    final User user = ds.getValue(User.class);
+                    DatabaseReference database = Firebase.database.getReference("users").child(user.id).child("groups").child(groupID);
+                    database.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                          // String flag = "false";
+                            if(!dataSnapshot.exists()){
+                              //  flag = "true";
+                                if(!user.id.contentEquals(Firebase.firebaseAuth.getCurrentUser().getUid())) {
+                                    uList.add(user);
+                                }
+                              //  Toast.makeText(AddMemberActivity.this,flag,Toast.LENGTH_SHORT).show();
+
+                                userAdapter = new UserAdapter(AddMemberActivity.this, R.layout.member_item, uList);
+                                lvMember.setAdapter(userAdapter);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
                 }
-
-                userAdapter = new UserAdapter(AddMemberActivity.this, R.layout.member_item, uList);
-
-                lvMember.setAdapter(userAdapter);
             }
 
             @Override

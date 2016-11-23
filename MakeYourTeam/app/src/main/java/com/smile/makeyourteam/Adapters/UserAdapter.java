@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,15 +26,22 @@ public class UserAdapter extends ArrayAdapter<User> {
     Activity context;
     int resourceId;
     List<User> users = new ArrayList<User>();
+    public List<Boolean> positionChecked = null;
 
     public UserAdapter(Activity context, int resource, List<User> objects) {
         super(context, resource, objects);
         this.context = context;
         resourceId = resource;
         users = objects;
+        if(this.resourceId == R.layout.member_item){
+            positionChecked = new ArrayList<>();
+            for(int i = 0; i<users.size();i++){
+                positionChecked.add(false);
+            }
+        }
     }
 
-    public View getView(int position, View v, ViewGroup parent){
+    public View getView(final int position, View v, ViewGroup parent){
         LayoutInflater inflater = context.getLayoutInflater();
         v = inflater.inflate(resourceId, null);
         User user = users.get(position);
@@ -51,7 +59,20 @@ public class UserAdapter extends ArrayAdapter<User> {
                     .load(user.thumbnail)
                     .into(avatar);
         }
-      //  avatar.setImageResource(user.thumbnail);
+
+        if(positionChecked!=null) {
+            final CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkboxAdd);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(((CheckBox)view).isChecked()){
+                        positionChecked.set(position,true);
+                    }else {
+                        positionChecked.set(position,false);
+                    }
+                }
+            });
+        }
         return v;
     }
 }

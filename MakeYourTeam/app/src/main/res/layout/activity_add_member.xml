@@ -8,19 +8,20 @@
 
     <ListView
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:background="@color/white"
         android:id="@+id/listMember"
         android:divider="@null"
         android:dividerHeight="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/bgViewTabs"
-        android:layout_above="@+id/btn_add_member"
-        android:listSelector="@android:color/holo_green_dark"/>
+        android:layout_above="@+id/btn_add_member" />
 
     <Button
-        android:paddingBottom="10dp"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
         android:id="@+id/btn_add_member"
         android:layout_width="match_parent"
         android:layout_height="50dp"
