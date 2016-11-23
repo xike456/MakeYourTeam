@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.smile.makeyourteam.Adapters.UserAdapter;
 import com.smile.makeyourteam.Config;
@@ -70,7 +71,8 @@ public class AddMemberActivity extends AppCompatActivity {
 
     void LoadUser(){
         DatabaseReference database = Firebase.database.getReference("users");
-        database.addValueEventListener(new ValueEventListener() {
+        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.teamId).endAt(MainActivity.teamId);
+        myTopPostsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 uList.clear();
