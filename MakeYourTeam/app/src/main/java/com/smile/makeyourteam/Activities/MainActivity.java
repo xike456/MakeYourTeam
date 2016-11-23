@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog progressDialog;
-    public static User currentUser;
+    public static User currentUser = null;
+    public static String teamId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     // LoadGroups();
                     getCurrentUser();
                     checkTeamExist();
+
                     Log.d("Authentication",  "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
@@ -156,11 +158,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String teamId = (String) dataSnapshot.getValue();
-                progressDialog.hide();
-                if (teamId == null || teamId.isEmpty()) {
+                String team = (String) dataSnapshot.getValue();
+                if (team == null || team.isEmpty()) {
                     startJoinTeam();
+                } else {
+                    teamId = team;
                 }
+                progressDialog.hide();
             }
 
             @Override

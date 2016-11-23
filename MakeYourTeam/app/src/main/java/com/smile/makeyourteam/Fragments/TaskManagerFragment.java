@@ -1,6 +1,7 @@
 package com.smile.makeyourteam.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.smile.makeyourteam.Activities.TaskActivity;
 import com.smile.makeyourteam.Adapters.TaskAdapter;
 import com.smile.makeyourteam.Models.Task;
 import com.smile.makeyourteam.R;
@@ -83,7 +85,8 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view == btnAddTask) {
-            Toast.makeText(getContext(), "Add new task", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), TaskActivity.class);
+            startActivity(intent);
         }
     }
 
