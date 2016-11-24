@@ -1,6 +1,7 @@
 package com.smile.makeyourteam.Activities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.Models.MessageViewHolder;
@@ -46,6 +50,11 @@ public class ChatActivity extends AppCompatActivity {
     private String idGroup;
     private String nameGroup;
     public static TextView tvTyping;
+
+    final String[] key = {""};
+    final int[] count = {0};
+    private String finalCodeStringUseClear;
+    private String currentUserIdReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
+        currentUserIdReset = currentUserID;
         final String sRef = currentUserID + "-" + id_userReceive;
 
         // create code
@@ -98,23 +108,18 @@ public class ChatActivity extends AppCompatActivity {
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
         tvTyping = (TextView) findViewById(R.id.typing);
 
-        final String[] key = {""};
+
         final String finalCodeString = codeString;
-        final int[] count = {0};
+        finalCodeStringUseClear = codeString;
 
         etMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(count[0] == 0){
-                    DatabaseReference databaseRef = Firebase.database.getReference("message");
-                    Message message;
-                    if(isGroupChat){
-                        message = new Message(userName, new Date().getTime(),"...", currentUserID, "", photoUrl, "");
-                    }else {
-                        message = new Message(userName, new Date().getTime(),"...", currentUserID, id_userReceive, photoUrl, nameUserReceive);
-                    }
-                    key[0] = databaseRef.child(finalCodeString).push().getKey();
-                    databaseRef.child(finalCodeString).child(key[0]).setValue(message);
+
+                    DatabaseReference databaseRef = Firebase.database.getReference("typing").child(finalCodeStringUseClear);
+                    databaseRef.child(currentUserID).setValue("true");
+
                     count[0]++;
                 }
             }
@@ -134,8 +139,6 @@ public class ChatActivity extends AppCompatActivity {
                 if(etMessage.getText().toString().equals("")) {
                     return;
                 }
-                Firebase.database.getReference("message").child(finalCodeString).child(key[0]).removeValue();
-               // tvTyping.setVisibility(View.GONE);
                 DatabaseReference databaseRef = Firebase.database.getReference("message");
                 Message message;
                 if(isGroupChat){
@@ -146,7 +149,9 @@ public class ChatActivity extends AppCompatActivity {
                 etMessage.setText("");
                 databaseRef.child(finalCodeString).push().setValue(message);
 
-                key[0]="";
+                DatabaseReference databaseRefTyping = Firebase.database.getReference("typing").child(finalCodeStringUseClear);
+                databaseRefTyping.child(currentUserID).setValue("false");
+
                 count[0] = 0;
             }
         });
@@ -174,13 +179,13 @@ public class ChatActivity extends AppCompatActivity {
 
                 if(message.senderId.equals(currentUserID)){
                     if(message.messages.equals("...")){
-                        tvTyping.setVisibility(View.GONE);
-                       viewHolder.tvDisplayName.setVisibility(View.GONE);
-                       viewHolder.tvMessage.setVisibility(View.GONE);
-                       viewHolder.avatar.setVisibility(View.GONE);
+
+                        viewHolder.tvDisplayName.setVisibility(View.GONE);
+                        viewHolder.tvMessage.setVisibility(View.GONE);
+                        viewHolder.avatar.setVisibility(View.GONE);
                     }else {
-                        tvTyping.setVisibility(View.GONE);
-                     //   Toast.makeText(ChatActivity.this,"khong typing",Toast.LENGTH_SHORT).show();
+
+                        //   Toast.makeText(ChatActivity.this,"khong typing",Toast.LENGTH_SHORT).show();
                         viewHolder.tvDisplayName.setVisibility(View.VISIBLE);
                         viewHolder.tvMessage.setVisibility(View.VISIBLE);
                         viewHolder.avatar.setVisibility(View.VISIBLE);
@@ -194,16 +199,16 @@ public class ChatActivity extends AppCompatActivity {
                         viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
                         viewHolder.tvMessage.setText(message.messages);
                     }
-                }else if(message.receiveId.equals(currentUserID)){
+                }else{
                     if(message.messages.equals("...")){
-                        Toast.makeText(ChatActivity.this,"nhan typing",Toast.LENGTH_SHORT).show();
-                        tvTyping.setVisibility(View.VISIBLE);
+                        //Toast.makeText(ChatActivity.this,"nhan typing",Toast.LENGTH_SHORT).show();
+
                         viewHolder.tvDisplayName.setVisibility(View.GONE);
                         viewHolder.tvMessage.setVisibility(View.GONE);
                         viewHolder.avatar.setVisibility(View.GONE);
                     }else {
-                        tvTyping.setVisibility(View.GONE);
-                        Toast.makeText(ChatActivity.this,"khong nhan typing",Toast.LENGTH_SHORT).show();
+
+                        //Toast.makeText(ChatActivity.this,"khong nhan typing",Toast.LENGTH_SHORT).show();
                         viewHolder.tvDisplayName.setVisibility(View.VISIBLE);
                         viewHolder.tvMessage.setVisibility(View.VISIBLE);
                         viewHolder.avatar.setVisibility(View.VISIBLE);
@@ -225,55 +230,6 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 }
 
-
-
-//                if( message.senderId == currentUserID && message.messages.equals("...")){
-//                    Toast.makeText(ChatActivity.this,"minh gui",Toast.LENGTH_SHORT).show();
-////                    tvTyping.setVisibility(View.GONE);
-////                    viewHolder.tvDisplayName.setVisibility(View.GONE);
-////                    viewHolder.tvMessage.setVisibility(View.GONE);
-////                    viewHolder.avatar.setVisibility(View.GONE);
-//                    viewHolder.setIsRecyclable(false);
-//
-//                }else if(message.messages.equals("...")&& message.receiveId != currentUserID){
-//                    Toast.makeText(ChatActivity.this,"nguoi khac gui typing",Toast.LENGTH_SHORT).show();
-//                    tvTyping.setVisibility(View.VISIBLE);
-////                    viewHolder.tvDisplayName.setVisibility(View.GONE);
-////                    viewHolder.tvMessage.setVisibility(View.GONE);
-////                    viewHolder.avatar.setVisibility(View.GONE);
-//                    viewHolder.setIsRecyclable(false);
-//
-//                }else if(!message.messages.equals("...")){
-//                    tvTyping.setVisibility(View.GONE);
-//                    Toast.makeText(ChatActivity.this,"khong typing",Toast.LENGTH_SHORT).show();
-//                    viewHolder.tvDisplayName.setVisibility(View.VISIBLE);
-//                    viewHolder.tvMessage.setVisibility(View.VISIBLE);
-//                    viewHolder.avatar.setVisibility(View.VISIBLE);
-//
-//                    if(message.senderId.equals(currentUserID)){
-//                        viewHolder.avatar.setImageDrawable(null);
-//                        viewHolder.avatar.setVisibility(View.INVISIBLE);
-//                        viewHolder.tvMessage.setBackgroundResource(R.drawable.in_message_bg);
-//                        viewHolder.layoutUsername.setLayoutParams(paramsMsgRight);
-//                        viewHolder.layoutChat.setLayoutParams(paramsMsgRight);
-//                    }else {
-//                        if (message.photoUrl.length() == 0) {
-//                            viewHolder.avatar.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
-//                                    R.drawable.ic_people_black_48dp));
-//                        } else {
-//                            Glide.with(ChatActivity.this)
-//                                    .load(message.photoUrl)
-//                                    .into(viewHolder.avatar);
-//                        }
-//                        viewHolder.tvMessage.setBackgroundResource(R.drawable.out_message_bg);
-//                        viewHolder.layoutUsername.setLayoutParams(paramsMsgLeft);
-//                        viewHolder.layoutChat.setLayoutParams(paramsMsgLeft);
-//                    }
-//
-//
-//                    viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
-//                    viewHolder.tvMessage.setText(message.messages);
-//                }
             }
         };
 
@@ -294,20 +250,46 @@ public class ChatActivity extends AppCompatActivity {
 
         rcvMessage.setLayoutManager(mLinearLayoutManager);
         rcvMessage.setAdapter(mFirebaseAdapter);
+
+        DatabaseReference databaseRefTyping = Firebase.database.getReference("typing").child(finalCodeStringUseClear);
+        databaseRefTyping.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    String key = ds.getKey();
+                    String typing = ds.getValue().toString();
+                    if (!key.equals(currentUserID)){
+                        if (typing.equals("true")){
+                            tvTyping.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        else {
+                            tvTyping.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this,"chat ondestroy",Toast.LENGTH_LONG).show();
-
+        //Toast.makeText(this,"chat ondestroy",Toast.LENGTH_LONG).show();
+        resetTyping();
         Notifications.isChatActivityLaunch = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this,"chat onpause",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"chat onpause",Toast.LENGTH_LONG).show();
+        resetTyping();
         Notifications.isChatActivityLaunch = false;
     }
 
@@ -318,5 +300,11 @@ public class ChatActivity extends AppCompatActivity {
         sdf.setTimeZone(TimeZone.getDefault());
         result = sdf.format(date);
         return result;
+    }
+
+    public void resetTyping(){
+        DatabaseReference databaseRefTyping = Firebase.database.getReference("typing").child(finalCodeStringUseClear);
+        databaseRefTyping.child(currentUserIdReset).setValue("false");
+        count[0] = 0;
     }
 }

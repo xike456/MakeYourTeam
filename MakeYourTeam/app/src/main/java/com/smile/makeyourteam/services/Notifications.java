@@ -35,7 +35,7 @@ public class Notifications extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "service onCreate", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "service onCreate", Toast.LENGTH_SHORT).show();
         count = 0;
         userID = Firebase.firebaseAuth.getCurrentUser().getUid();
         isChatActivityLaunch = false;
@@ -51,14 +51,14 @@ public class Notifications extends Service{
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Toast.makeText(Notifications.this, "vao ham onChildChanged-" + isChatActivityLaunch.toString() + userID, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Notifications.this, "vao ham onChildChanged-" + isChatActivityLaunch.toString() + userID, Toast.LENGTH_SHORT).show();
                 Message message = new Message();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     message = ds.getValue(Message.class);
                 }
 
                 if(message.receiveId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && isChatActivityLaunch == false){
-                    Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
 
                    // sendNotification(message);
                 }
@@ -87,7 +87,7 @@ public class Notifications extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         userID = Firebase.firebaseAuth.getCurrentUser().getUid();
         isChatActivityLaunch = false;
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
         return START_STICKY;
     }
 
@@ -95,7 +95,7 @@ public class Notifications extends Service{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "service destroy", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "service destroy", Toast.LENGTH_SHORT).show();
     }
 
 

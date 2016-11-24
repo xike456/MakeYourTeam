@@ -63,6 +63,8 @@ public class AddMemberActivity extends AppCompatActivity {
                 for (int i = 0; i < checked.size(); i++) {
                     if (checked.get(i)){
                         addMemberToGroup(groupName, groupID, uList.get(i).id);
+                        Toast.makeText(AddMemberActivity.this,"Add member success",Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }
             }
@@ -75,6 +77,7 @@ public class AddMemberActivity extends AppCompatActivity {
         myTopPostsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //Toast.makeText(AddMemberActivity.this,"myTopPostsQuery chay ",Toast.LENGTH_SHORT).show();
                 uList.clear();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     final User user = ds.getValue(User.class);
