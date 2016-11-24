@@ -2,7 +2,10 @@ package com.smile.makeyourteam.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,18 +18,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
 import com.smile.makeyourteam.Activities.AddMemberActivity;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Config;
+import com.smile.makeyourteam.Fragments.ChangeTitleGroupDialogFragment;
+import com.smile.makeyourteam.Fragments.CreateGroupDialogFragment;
 import com.smile.makeyourteam.Models.Group;
 import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
+import com.smile.makeyourteam.server.Firebase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import static java.security.AccessController.getContext;
+
 
 /**
  * Created by mpnguyen on 09/11/2016.
@@ -96,6 +106,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
                 case R.id.change_avatar_group:
                     return true;
                 case R.id.leave_group:
+                    Firebase.database.getReference("users").child(Firebase.firebaseAuth.getCurrentUser().getUid()).child("groups").child(groups.get(position).id).removeValue();
                     return true;
                 case R.id.add_member:
                     Intent intent = new Intent(mContext, AddMemberActivity.class);
@@ -104,6 +115,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
                     mContext.startActivity(intent);
                     return true;
                 case R.id.change_title_group:
+                    showDialogChangeTitleGroup(groups.get(position).id);
                     return true;
                 default:
             }
@@ -167,4 +179,12 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         result = sdf.format(date);
         return result;
     }
+
+    private void showDialogChangeTitleGroup(String GroupID) {
+        FragmentManager fm = ((AppCompatActivity)mContext).getSupportFragmentManager();
+        ChangeTitleGroupDialogFragment newFragment = new ChangeTitleGroupDialogFragment();
+        newFragment.setGroupID(GroupID);
+        newFragment.show(fm, "New group fragment");
+    }
+
 }
