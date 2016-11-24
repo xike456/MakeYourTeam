@@ -3,7 +3,6 @@ package com.smile.makeyourteam.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,8 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +45,7 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
     private static List<Task> filterTaskList;
     private FloatingActionButton btnAddTask;
     private static boolean isMyTask = true;
-    private static String currentSate;
+    private static String currentState;
 
     public TaskManagerFragment() {
         // Required empty public constructor
@@ -108,7 +104,7 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
     private static void filterTask() {
         filterTaskList.clear();
         for (Task task : taskList) {
-            if (task.state.equals(currentSate)) {
+            if (task.state.equals(currentState)) {
                 if (isMyTask == true) {
                     if (task.assignToId.equals(Firebase.firebaseAuth.getCurrentUser().getUid())) {
                         filterTaskList.add(task);
@@ -166,7 +162,7 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        currentSate = adapterView.getAdapter().getItem(i).toString();
+        currentState = adapterView.getAdapter().getItem(i).toString();
         filterTask();
     }
 
