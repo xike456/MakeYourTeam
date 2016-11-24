@@ -24,7 +24,7 @@
         <EditText
             android:id="@+id/txtEmail"
             android:paddingLeft="20dp"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:background="@drawable/editbox_border"
             android:hint="Username or email"
             android:layout_width="match_parent"

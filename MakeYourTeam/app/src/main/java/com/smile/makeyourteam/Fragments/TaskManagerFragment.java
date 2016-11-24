@@ -3,6 +3,7 @@ package com.smile.makeyourteam.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,13 +78,31 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        if (!MainActivity.teamId.isEmpty()) {
-            loadTasks();
-        } else {
-            loadTeamInfo();
-        }
+
+
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    if (!MainActivity.teamId.isEmpty()) {
+                        loadTasks();
+                    } else {
+                        loadTeamInfo();
+                    }
+
+                    Log.d("Authentication", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("Authentication", "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
         btnAddTask.setOnClickListener(this);
     }
+
+
 
     private void loadTeamInfo() {
         FirebaseUser currentUser = Firebase.firebaseAuth.getCurrentUser();

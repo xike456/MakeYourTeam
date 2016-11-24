@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     getCurrentUser();
                     checkTeamExist();
 
+                    // start service notification
+                    Intent service = new Intent(MainActivity.this,  Notifications.class);
+                    startService(service);
+
                     Log.d("Authentication",  "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
@@ -97,9 +101,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         };
 
-        // start service notification
-        Intent service = new Intent(MainActivity.this,  Notifications.class);
-        startService(service);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
