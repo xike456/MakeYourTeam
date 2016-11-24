@@ -2,6 +2,7 @@ package com.smile.makeyourteam.Models;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +24,6 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         super(v);
         tvMessage = (TextView) itemView.findViewById(R.id.chatMessage);
         tvDisplayName = (TextView) itemView.findViewById(R.id.username);
-       // tvTimeSend = (TextView) itemView.findViewById(R.id.timeSend);
         avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
         layoutChat = (LinearLayout) itemView.findViewById(R.id.chat_layout);
         layoutUsername = (LinearLayout) itemView.findViewById(R.id.username_layout);
