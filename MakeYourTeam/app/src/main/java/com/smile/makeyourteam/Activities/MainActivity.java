@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading team...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
 
@@ -167,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     startJoinTeam();
                 } else {
                     teamId = team;
+                    TaskManagerFragment.loadTasks();
                 }
                 progressDialog.hide();
             }

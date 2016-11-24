@@ -8,9 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,9 +44,12 @@ import java.util.List;
 public class TaskManagerFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private RecyclerView recyclerView;
-    private TaskAdapter adapter;
-    private List<Task> taskList;
+    private static TaskAdapter adapter;
+    private static List<Task> taskList;
+    private static List<Task> filterTaskList;
     private FloatingActionButton btnAddTask;
+    private static boolean isMyTask = true;
+    private static String currentSate;
 
     public TaskManagerFragment() {
         // Required empty public constructor
@@ -72,58 +72,18 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
         btnAddTask = (FloatingActionButton) getActivity().findViewById(R.id.btnAddTask);
 
         taskList = new ArrayList<>();
-        adapter = new TaskAdapter(getContext(), taskList);
+        filterTaskList = new ArrayList<>();
+        adapter = new TaskAdapter(getContext(), filterTaskList);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-
-        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    if (!MainActivity.teamId.isEmpty()) {
-                        loadTasks();
-                    } else {
-                        loadTeamInfo();
-                    }
-
-                    Log.d("Authentication", "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d("Authentication", "onAuthStateChanged:signed_out");
-                }
-            }
-        };
-
         btnAddTask.setOnClickListener(this);
     }
 
-
-
-    private void loadTeamInfo() {
-        FirebaseUser currentUser = Firebase.firebaseAuth.getCurrentUser();
-        DatabaseReference database = Firebase.database.getReference("users")
-                .child(currentUser.getUid()).child("teamId");
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String team = (String) dataSnapshot.getValue();
-                MainActivity.teamId = team;
-                loadTasks();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public void loadTasks() {
+    public static void loadTasks() {
 
         DatabaseReference mDatabase = Firebase.database.getReference()
                 .child("teams").child(MainActivity.teamId).child("tasks");
@@ -135,7 +95,7 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
                     Task task = ds.getValue(Task.class);
                     taskList.add(task);
                 }
-                adapter.notifyDataSetChanged();
+                filterTask();
             }
 
             @Override
@@ -143,6 +103,22 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
 
             }
         });
+    }
+
+    private static void filterTask() {
+        filterTaskList.clear();
+        for (Task task : taskList) {
+            if (task.state.equals(currentSate)) {
+                if (isMyTask == true) {
+                    if (task.assignToId.equals(Firebase.firebaseAuth.getCurrentUser().getUid())) {
+                        filterTaskList.add(task);
+                    }
+                } else {
+                    filterTaskList.add(task);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -158,9 +134,9 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
         menu.clear();
         inflater.inflate(R.menu.menu_task_manager, menu);
 
-        MenuItem item = menu.findItem(R.id.menu_task);
+        MenuItem item = menu.findItem(R.id.state_menu_spinner);
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-
+        spinner.setSelection(1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.array_menu_task, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -170,14 +146,28 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i == 0) {
-            //Toast.makeText(getContext(), "New", Toast.LENGTH_SHORT).show();
-        } else if (i == 1) {
-            //Toast.makeText(getContext(), "Active", Toast.LENGTH_SHORT).show();
-        } else if (i == 2) {
-            //Toast.makeText(getContext(), "Close", Toast.LENGTH_SHORT).show();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnSwitchTask:
+                if (isMyTask) {
+                    isMyTask = false;
+                    item.setIcon(R.drawable.ic_people_white_24dp);
+                    item.setTitle("All tasks");
+                } else {
+                    isMyTask = true;
+                    item.setIcon(R.drawable.ic_person_white_24dp);
+                    item.setTitle("My tasks");
+                }
+                filterTask();
+                return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        currentSate = adapterView.getAdapter().getItem(i).toString();
+        filterTask();
     }
 
     @Override
