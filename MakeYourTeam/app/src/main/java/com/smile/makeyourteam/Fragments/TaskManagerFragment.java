@@ -40,12 +40,12 @@ import java.util.List;
 public class TaskManagerFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private RecyclerView recyclerView;
-    private static TaskAdapter adapter;
-    private static List<Task> taskList;
-    private static List<Task> filterTaskList;
+    private TaskAdapter adapter;
+    private List<Task> taskList;
+    private List<Task> filterTaskList;
     private FloatingActionButton btnAddTask;
-    private static boolean isMyTask = true;
-    private static String currentState;
+    private boolean isMyTask = false;
+    private String currentState;
 
     public TaskManagerFragment() {
         // Required empty public constructor
@@ -77,12 +77,14 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
         recyclerView.setAdapter(adapter);
 
         btnAddTask.setOnClickListener(this);
+
+        loadTasks();
     }
 
-    public static void loadTasks() {
+    public void loadTasks() {
 
         DatabaseReference mDatabase = Firebase.database.getReference()
-                .child("teams").child(MainActivity.teamId).child("tasks");
+                .child("teams").child(MainActivity.currentUser.teamId).child("tasks");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,7 +103,7 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
         });
     }
 
-    private static void filterTask() {
+    private void filterTask() {
         filterTaskList.clear();
         for (Task task : taskList) {
             if (task.state.equals(currentState)) {
@@ -132,12 +134,11 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
 
         MenuItem item = menu.findItem(R.id.state_menu_spinner);
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-        spinner.setSelection(1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.array_menu_task, android.R.layout.simple_spinner_item);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(this);
     }
 

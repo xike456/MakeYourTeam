@@ -94,6 +94,7 @@ public class JoinTeamActivity extends AppCompatActivity implements View.OnClickL
             return;
 
         mDatabase.child("users").child(mUser.getUid()).child("teamId").setValue(pin);
+        MainActivity.currentUser.teamId = pin;
         startWelcome(pin);
     }
 

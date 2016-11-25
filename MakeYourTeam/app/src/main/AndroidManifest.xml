@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,9 +49,9 @@
         <service android:name=".services.Notifications" />
 
         <activity android:name=".Activities.ForgetPasswordActivity" />
-        <activity android:name=".Activities.AddMemberActivity"></activity>
-        <activity android:name=".Activities.TaskActivity"></activity>
-
+        <activity android:name=".Activities.AddMemberActivity" />
+        <activity android:name=".Activities.TaskActivity" />
+        <activity android:name=".Activities.MainActivity"></activity>
     </application>
 
 </manifest>

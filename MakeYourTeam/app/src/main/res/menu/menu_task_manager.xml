@@ -11,7 +11,7 @@
         android:id="@+id/btnSwitchTask"
         android:orderInCategory="101"
         app:showAsAction="always"
-        android:icon="@drawable/ic_person_white_24dp"
+        android:icon="@drawable/ic_people_white_24dp"
         android:title="My task"/>
     <item
         android:title="Logout"

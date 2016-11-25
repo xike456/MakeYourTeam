@@ -50,18 +50,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private ProgressDialog progressDialog;
     public static User currentUser = null;
-    public static String teamId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading team...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage("Loading team...");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
 
 
         // init FacebookSDK
@@ -84,12 +82,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // LoadUser();
-                    // LoadGroups();
-                    getCurrentUser();
-                    checkTeamExist();
-
-                    // start service notification
                     Intent service = new Intent(MainActivity.this,  Notifications.class);
                     startService(service);
 
@@ -138,52 +130,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             }
         });
-    }
-
-    private void getCurrentUser() {
-        FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
-        DatabaseReference database = Firebase.database.getReference("users");
-        database.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                currentUser = dataSnapshot.getValue(User.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void checkTeamExist() {
-        FirebaseUser currentUser = Firebase.firebaseAuth.getCurrentUser();
-        DatabaseReference database = Firebase.database.getReference("users")
-                .child(currentUser.getUid()).child("teamId");
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String team = (String) dataSnapshot.getValue();
-                if (team == null || team.isEmpty()) {
-                    startJoinTeam();
-                } else {
-                    teamId = team;
-                    TaskManagerFragment.loadTasks();
-                }
-                progressDialog.hide();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void startJoinTeam() {
-        Intent startJoinTeamActivity = new Intent(MainActivity.this, JoinTeamActivity.class);
-        startActivity(startJoinTeamActivity);
-        this.finish();
     }
 
     @Override

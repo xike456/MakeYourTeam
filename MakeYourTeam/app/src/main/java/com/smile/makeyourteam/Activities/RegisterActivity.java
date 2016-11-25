@@ -74,15 +74,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "Registerd", Toast.LENGTH_SHORT).show();
-                            progressDialog.hide();
 
                             FirebaseUser user = Firebase.firebaseAuth.getCurrentUser();
                             DatabaseReference myRef = Firebase.database.getReference("users");
-
                             User userData = new User(user.getUid(), user.getDisplayName(), user.getEmail(), convertToNickname(user.getEmail()), "");
-                            myRef.child(user.getUid()).setValue(userData);
-
-                            startCreateTeamActivity();
+                            MainActivity.currentUser = userData;
+                            myRef.child(user.getUid()).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    startCreateTeamActivity();
+                                }
+                            });
                         }
                         else{
                             Toast.makeText(RegisterActivity.this, "Register fail", Toast.LENGTH_SHORT).show();
@@ -103,6 +105,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void startCreateTeamActivity() {
         Intent joinTeamActivity = new Intent(this, JoinTeamActivity.class);
         startActivity(joinTeamActivity);
+        progressDialog.hide();
         this.finish();
     }
 }

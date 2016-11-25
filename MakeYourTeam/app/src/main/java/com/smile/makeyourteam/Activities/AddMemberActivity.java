@@ -73,7 +73,7 @@ public class AddMemberActivity extends AppCompatActivity {
 
     void LoadUser(){
         DatabaseReference database = Firebase.database.getReference("users");
-        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.teamId).endAt(MainActivity.teamId);
+        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.currentUser.teamId).endAt(MainActivity.currentUser.teamId);
         myTopPostsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
