@@ -51,7 +51,7 @@ public class SplashActivity extends AppCompatActivity {
     private void getCurrentUser() {
         FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
         DatabaseReference database = Firebase.database.getReference("users");
-        database.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+        database.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 MainActivity.currentUser = dataSnapshot.getValue(User.class);
