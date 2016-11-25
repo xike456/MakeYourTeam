@@ -62,9 +62,10 @@ public class CreateTeamActivity extends AppCompatActivity implements View.OnClic
             return;
 
         String PIN = createNewPIN();
-        Team group = new Team(PIN, teamName);
-        mDatabase.child("teams/" + PIN).setValue(group);
-        mDatabase.child("users/" + mUser.getUid() + "/teamId").setValue(group.id);
+        Team team = new Team(PIN, teamName);
+        mDatabase.child("teams/" + PIN).setValue(team);
+        mDatabase.child("users/" + mUser.getUid() + "/teamId").setValue(team.id);
+        MainActivity.currentUser.teamId = team.id;
         startWelcome(PIN);
         this.finish();
     }

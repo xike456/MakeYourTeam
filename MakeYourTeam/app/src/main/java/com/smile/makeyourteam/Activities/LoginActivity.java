@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onCancelled(DatabaseError firebaseError) { }
                         });
                         progressDialog.dismiss();
-                        startMainActivity();
+                        startSplashActivity();
                         if (!task.isSuccessful()) {
                            // Toast.makeText(LoginActivity.this, "Logged in by Facebook fail", Toast.LENGTH_SHORT).show();
                         }
@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(task.isSuccessful()){
                             Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                             progressDialog.hide();
-                            startMainActivity();
+                            startSplashActivity();
                         }
                         else{
                             Toast.makeText(LoginActivity.this, "log in fail", Toast.LENGTH_SHORT).show();
@@ -245,7 +245,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 public void onDataChange(DataSnapshot snapshot) {
                                     if (!snapshot.exists()) {
                                         User userData = new User(user.getUid(), user.getDisplayName(), user.getEmail(),"",user.getPhotoUrl().toString());
-
+                                        //MainActivity.currentUser = userData;
                                         myRef.child(user.getUid()).setValue(userData);
                                     }
                                 }
@@ -255,15 +255,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             });
 
                             progressDialog.dismiss();
-                            startMainActivity();
+                            startSplashActivity();
                         }
                     }
                 });
     }
 
-    private void startMainActivity() {
-        Intent callMain = new Intent(LoginActivity.this,MainActivity.class);
-        startActivity(callMain);
+    private void startSplashActivity() {
+        Intent callSplash = new Intent(LoginActivity.this, SplashActivity.class);
+        startActivity(callSplash);
         finish();
     }
 

@@ -98,7 +98,7 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
 
     void LoadMemberToAssignList(){
         DatabaseReference database = Firebase.database.getReference("users");
-        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.teamId).endAt(MainActivity.teamId);
+        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.currentUser.teamId).endAt(MainActivity.currentUser.teamId);
         myTopPostsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -197,7 +197,7 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         DatabaseReference mDatabase = Firebase.database.getReference()
-                .child("teams").child(MainActivity.teamId).child("tasks");
+                .child("teams").child(MainActivity.currentUser.teamId).child("tasks");
 
         if (taskId == null || taskId.isEmpty()) {
             taskId = mDatabase.push().getKey();

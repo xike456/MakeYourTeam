@@ -11,8 +11,8 @@ public class User {
     public String id;
     public String displayName ="";
     public String nickName = "";
-    public String email ="";
-    public String teamId ="";
+    public String email = "";
+    public String teamId = "";
     public String thumbnail ="";
 
     public User() {
