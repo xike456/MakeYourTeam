@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -149,10 +150,12 @@ public class TaskManagerFragment extends Fragment implements View.OnClickListene
                 if (isMyTask) {
                     isMyTask = false;
                     item.setIcon(R.drawable.ic_people_white_24dp);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("All tasks");
                     item.setTitle("All tasks");
                 } else {
                     isMyTask = true;
                     item.setIcon(R.drawable.ic_person_white_24dp);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My tasks");
                     item.setTitle("My tasks");
                 }
                 filterTask();
