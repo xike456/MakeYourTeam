@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -104,6 +105,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.change_avatar_group:
+                    MainActivity.setThumbnailGroup((AppCompatActivity) mContext,groups.get(position).id);
                     return true;
                 case R.id.leave_group:
                     Firebase.database.getReference("users").child(Firebase.firebaseAuth.getCurrentUser().getUid()).child("groups").child(groups.get(position).id).removeValue();

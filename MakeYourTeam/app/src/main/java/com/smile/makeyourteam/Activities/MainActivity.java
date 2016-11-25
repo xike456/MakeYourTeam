@@ -1,7 +1,9 @@
 package com.smile.makeyourteam.Activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,12 +25,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Fragments.ChatManagerFragment;
 import com.smile.makeyourteam.Fragments.HomeFragment;
@@ -53,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private ProgressDialog progressDialog;
     public static User currentUser = null;
     public static String teamId = "";
+    public static int REQUEST_CHOOSE = 1;
+    private static String groupID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -278,5 +286,65 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CHOOSE && resultCode == RESULT_OK)  {
+            Uri uri = data.getData();
+
+            StorageReference riversRef = Firebase.storageRef.child("avatarGroup/"+uri.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(uri);
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    changeThumbnailGroup(downloadUrl.toString());
+                }
+            });
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static void setThumbnailGroup(Activity activity, String groupID){
+        MainActivity.groupID = groupID;
+        Intent intentPick = new Intent();
+        intentPick.setAction(Intent.ACTION_GET_CONTENT);
+        intentPick.setType("image/*");
+        activity.startActivityForResult(intentPick,REQUEST_CHOOSE);
+    }
+
+    public void changeThumbnailGroup(final String url){
+        DatabaseReference mDatabase = Firebase.database.getReference();
+        FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
+        if (mDatabase == null || mUser == null)
+            return;
+
+        DatabaseReference database = Firebase.database.getReference("users");
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    if(ds.child("groups").child(groupID).exists()){
+                        DatabaseReference databaseRef = Firebase.database.getReference("users").child(ds.getKey()).child("groups").child(groupID);
+                        databaseRef.child("thumbnail").setValue(url);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
