@@ -47,7 +47,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
 
     private Context mContext;
     private List<Group> groups;
-    private int position;
+    private int pos;
 
     public GroupsAdapter(Context mContext, List<Group> groups) {
         this.mContext = mContext;
@@ -63,7 +63,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Group group = groups.get(position);
         holder.title.setText(group.title);
         holder.timeStamp.setText(timestampToHour(group.timestamp));
@@ -81,6 +81,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pos = position;
                 showPopupMenu(holder.overflow);
             }
         });
@@ -105,19 +106,19 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.change_avatar_group:
-                    MainActivity.setThumbnailGroup((AppCompatActivity) mContext,groups.get(position).id);
+                    MainActivity.setThumbnailGroup((AppCompatActivity) mContext,groups.get(pos).id);
                     return true;
                 case R.id.leave_group:
-                    Firebase.database.getReference("users").child(Firebase.firebaseAuth.getCurrentUser().getUid()).child("groups").child(groups.get(position).id).removeValue();
+                    Firebase.database.getReference("users").child(Firebase.firebaseAuth.getCurrentUser().getUid()).child("groups").child(groups.get(pos).id).removeValue();
                     return true;
                 case R.id.add_member:
                     Intent intent = new Intent(mContext, AddMemberActivity.class);
-                    intent.putExtra(Config.ID_GROUP, groups.get(position).id);
-                    intent.putExtra(Config.NAME_GROUP, groups.get(position).title);
+                    intent.putExtra(Config.ID_GROUP, groups.get(pos).id);
+                    intent.putExtra(Config.NAME_GROUP, groups.get(pos).title);
                     mContext.startActivity(intent);
                     return true;
                 case R.id.change_title_group:
-                    showDialogChangeTitleGroup(groups.get(position).id);
+                    showDialogChangeTitleGroup(groups.get(pos).id);
                     return true;
                 default:
             }
@@ -130,7 +131,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         return groups.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, timeStamp;
         public ImageView thumbnail, overflow;
 
@@ -141,26 +142,19 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
 
-            overflow.setOnClickListener(new View.OnClickListener() {
+            thumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    position = getLayoutPosition();
+                    Context context = itemView.getContext();
+                    final User finalCurrentUser = MainActivity.currentUser;
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra(Config.ID_GROUP, groups.get(getLayoutPosition()).id);
+                    intent.putExtra(Config.NAME_GROUP, groups.get(getLayoutPosition()).title);
+                    intent.putExtra(Config.USER_NAME, getUserName(finalCurrentUser));
+                    intent.putExtra(Config.PHOTO_URL, finalCurrentUser.thumbnail);
+                    context.startActivity(intent);
                 }
             });
-
-            thumbnail.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Context context = itemView.getContext();
-            final User finalCurrentUser = MainActivity.currentUser;
-            Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra(Config.ID_GROUP, groups.get(getLayoutPosition()).id);
-            intent.putExtra(Config.NAME_GROUP, groups.get(getLayoutPosition()).title);
-            intent.putExtra(Config.USER_NAME, getUserName(finalCurrentUser));
-            intent.putExtra(Config.PHOTO_URL, finalCurrentUser.thumbnail);
-            context.startActivity(intent);
         }
 
         private String getUserName(User user) {

@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Models.Message;
+import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 
@@ -30,7 +31,9 @@ public class Notifications extends Service{
 
     private String userID;
     private int count;
-    public static Boolean isChatActivityLaunch = false;
+   // public static Boolean isChatActivityLaunch = false;
+    public static Boolean isAppFocus = false;
+    public static String idGroupPerson = "";
 
     @Override
     public void onCreate() {
@@ -38,7 +41,7 @@ public class Notifications extends Service{
         //Toast.makeText(this, "service onCreate", Toast.LENGTH_SHORT).show();
         count = 0;
         userID = Firebase.firebaseAuth.getCurrentUser().getUid();
-        isChatActivityLaunch = false;
+       // isChatActivityLaunch = false;
 
         DatabaseReference mRef = Firebase.database.getReference().child("message");
         mRef.keepSynced(true);
@@ -57,10 +60,17 @@ public class Notifications extends Service{
                     message = ds.getValue(Message.class);
                 }
 
-                if(message.receiveId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && isChatActivityLaunch == false){
-                    //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+                String[] parts = message.nameUserReceive.split("-");
+                String id = "";
+                if(parts.length == 1){
+                    id = message.userName;
+                }else {
+                    id = parts[1];
+                }
 
-                   // sendNotification(message);
+                if(!message.senderId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && !idGroupPerson.equals(id) ){
+                    Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+                    sendNotification(message);
                 }
             }
 
@@ -86,7 +96,9 @@ public class Notifications extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         userID = Firebase.firebaseAuth.getCurrentUser().getUid();
-        isChatActivityLaunch = false;
+        //isChatActivityLaunch = false;
+       // isAppFocus = false;
+        //idGroupPerson = "";
         //Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
         return START_STICKY;
     }
@@ -106,21 +118,51 @@ public class Notifications extends Service{
     }
 
     private void sendNotification(Message message) {
+        Integer id = 0;
         Intent i = new Intent(this, ChatActivity.class);
-        i.putExtra(Config.ID_USER_REVEIVE, message.senderId);
-        i.putExtra(Config.NAME_USER_RECEIVE, message.userName);
-        i.putExtra(Config.USER_NAME,message.nameUserReceive);
-        i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+      //  Toast.makeText(this, message.nameUserReceive, Toast.LENGTH_SHORT).show();
+
+        String[] parts = message.nameUserReceive.split("-");
+        String title = "";
+        // person to person
+        if(parts.length == 1){
+           // Toast.makeText(this, "person", Toast.LENGTH_SHORT).show();
+            title = message.userName;
+            String str = message.receiveId+message.senderId;
+            id = str.hashCode();
+            i.putExtra(Config.ID_USER_REVEIVE, message.senderId);
+            i.putExtra(Config.NAME_USER_RECEIVE, message.userName);
+            i.putExtra(Config.USER_NAME,message.nameUserReceive);
+            i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+        }else{
+         //   Toast.makeText(this, "group", Toast.LENGTH_SHORT).show();
+            title = parts[1];
+            id = message.receiveId.hashCode();
+            i.putExtra(Config.ID_GROUP, message.receiveId);
+            i.putExtra(Config.NAME_GROUP, parts[1]);
+            String name = Firebase.firebaseAuth.getCurrentUser().getDisplayName()==null? Firebase.firebaseAuth.getCurrentUser().getEmail() :Firebase.firebaseAuth.getCurrentUser().getDisplayName();
+            i.putExtra(Config.USER_NAME, name);
+            i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+        }
+
+
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
        // startActivity(i);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, i,
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, id /* Request code */, i,
                 PendingIntent.FLAG_UPDATE_CURRENT);
+        Uri defaultSoundUri = null;
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Toast.makeText(this,"isAppFocus "+ isAppFocus.toString(),Toast.LENGTH_SHORT).show();
+
+
+        if(!isAppFocus){
+            defaultSoundUri  = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.drawer_top)
-                .setContentTitle("MakeYourTeam")
+                .setContentTitle(title)
                 .setContentText(message.messages)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -129,6 +171,6 @@ public class Notifications extends Service{
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(id /* ID of notification */, notificationBuilder.build());
     }
 }

@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 if (user != null) {
                     Intent service = new Intent(MainActivity.this,  Notifications.class);
                     startService(service);
+                    Notifications.isAppFocus = true;
+                    Toast.makeText(MainActivity.this,"Main onCreate",Toast.LENGTH_SHORT).show();
 
                     Log.d("Authentication",  "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
@@ -319,5 +321,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this,"Main onPause",Toast.LENGTH_SHORT).show();
+        Notifications.isAppFocus = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this,"Main onDestroy",Toast.LENGTH_SHORT).show();
+        Notifications.isAppFocus = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this,"Main onResume",Toast.LENGTH_SHORT).show();
+        Notifications.isAppFocus = true;
     }
 }

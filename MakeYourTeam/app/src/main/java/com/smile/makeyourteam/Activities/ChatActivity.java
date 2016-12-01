@@ -61,8 +61,11 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Notifications.isChatActivityLaunch = true;
-        Toast.makeText(this,"chat onCreate",Toast.LENGTH_LONG).show();
+        Notifications.isAppFocus = true;
+
+
+        // Notifications.isChatActivityLaunch = true;
+      //  Toast.makeText(this,"chat onCreate",Toast.LENGTH_LONG).show();
 
         // get user receive
         final String id_userReceive;
@@ -72,6 +75,8 @@ public class ChatActivity extends AppCompatActivity {
         userName = i.getStringExtra(Config.USER_NAME);
         photoUrl = i.getStringExtra(Config.PHOTO_URL);
 
+        Notifications.idGroupPerson = nameUserReceive;
+
         if (nameUserReceive == null) {
             isGroupChat = true;
             idGroup = i.getStringExtra(Config.ID_GROUP);
@@ -80,6 +85,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // set title
         if(isGroupChat) {
+            Notifications.idGroupPerson = nameGroup;
             setTitle(nameGroup);
         } else  {
             setTitle(nameUserReceive);
@@ -89,15 +95,16 @@ public class ChatActivity extends AppCompatActivity {
 
         final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
         currentUserIdReset = currentUserID;
-        final String sRef = currentUserID + "-" + id_userReceive;
+        String sRef = currentUserID + id_userReceive;
 
         // create code
         Integer code = 0;
-        for (int j = 0;j<sRef.length();j++){
+        for (int j = 0; j < sRef.length(); j++){
             code += sRef.charAt(j);
         }
 
         String codeString = code.toString();
+
         if (isGroupChat) {
             codeString = idGroup;
         }
@@ -142,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
                 DatabaseReference databaseRef = Firebase.database.getReference("message");
                 Message message;
                 if(isGroupChat){
-                    message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, "", photoUrl, "");
+                    message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, idGroup, photoUrl, "G-"+nameGroup);
                 }else {
                     message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, id_userReceive, photoUrl, nameUserReceive);
                 }
@@ -282,7 +289,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         //Toast.makeText(this,"chat ondestroy",Toast.LENGTH_LONG).show();
         resetTyping();
-        Notifications.isChatActivityLaunch = false;
+      //  Notifications.isChatActivityLaunch = false;
+        Notifications.isAppFocus = false;
     }
 
     @Override
@@ -290,7 +298,14 @@ public class ChatActivity extends AppCompatActivity {
         super.onPause();
         //Toast.makeText(this,"chat onpause",Toast.LENGTH_LONG).show();
         resetTyping();
-        Notifications.isChatActivityLaunch = false;
+        Notifications.isAppFocus = false;
+       // Notifications.isChatActivityLaunch = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Notifications.isAppFocus = true;
     }
 
     public String timestampToHour(long timestamp){
