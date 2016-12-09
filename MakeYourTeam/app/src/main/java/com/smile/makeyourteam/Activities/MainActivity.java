@@ -69,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public static String teamId = "";
     public static int REQUEST_CHOOSE = 1;
+    public static int REQUEST_CHOOSE_IMAGE = 2;
     private static String groupID;
-
+    private  static String messageID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     public static void setThumbnailGroup(Activity activity, String groupID){
         MainActivity.groupID = groupID;

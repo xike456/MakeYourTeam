@@ -55,6 +55,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/out_message_bg"/>
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:id="@+id/chatImage"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/out_message_bg"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </LinearLayout>

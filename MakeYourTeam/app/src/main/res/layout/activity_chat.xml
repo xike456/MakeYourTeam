@@ -18,12 +18,20 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/sendimage"
+            android:id="@+id/btnSelecteImage"
+            />
         <EditText
             android:id="@+id/etMessage"
             android:lines="2"
             android:ellipsize="none"
             android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
+            android:paddingLeft="40dp"
             android:background="@android:color/transparent"
             android:layout_toLeftOf="@+id/btnSend"
             android:hint="Enter your message"

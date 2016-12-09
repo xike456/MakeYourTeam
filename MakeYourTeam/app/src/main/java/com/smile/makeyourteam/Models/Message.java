@@ -14,11 +14,13 @@ public class Message {
     public String photoUrl;
     public String nameUserReceive;
 
+    public String messageImage;
+
     public Message(){
 
     }
 
-    public Message(String userName, long timestamp, String messages, String senderId, String receiveId, String photoUrl, String nameUserReceive){
+    public Message(String userName, long timestamp, String messages, String senderId, String receiveId, String photoUrl, String nameUserReceive, String messageImage){
         this.messages = messages;
         this.receiveId = receiveId;
         this.senderId = senderId;
@@ -27,5 +29,6 @@ public class Message {
         this.userName = userName;
         this.photoUrl = photoUrl;
         this.nameUserReceive = nameUserReceive;
+        this.messageImage = messageImage;
     }
 }

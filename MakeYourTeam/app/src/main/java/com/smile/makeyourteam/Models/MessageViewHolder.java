@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public TextView tvMessage, tvDisplayName;
     public CircleImageView avatar;
     public LinearLayout layoutChat, layoutUsername;
+    public ImageView ivMessage;
 
     public MessageViewHolder(View v) {
         super(v);
@@ -27,5 +29,6 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
         layoutChat = (LinearLayout) itemView.findViewById(R.id.chat_layout);
         layoutUsername = (LinearLayout) itemView.findViewById(R.id.username_layout);
+        ivMessage = (ImageView) itemView.findViewById(R.id.chatImage);
     }
 }

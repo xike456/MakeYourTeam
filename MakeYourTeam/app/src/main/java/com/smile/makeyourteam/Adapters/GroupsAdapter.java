@@ -73,6 +73,8 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
             holder.thumbnail.setImageDrawable(ContextCompat.getDrawable(mContext,
                     R.drawable.ic_people_black_48dp));
         } else {
+            holder.thumbnail.setImageDrawable(ContextCompat.getDrawable(mContext,
+                    R.drawable.loading));
             Glide.with(mContext)
                     .load(group.thumbnail)
                     .into(holder.thumbnail);
