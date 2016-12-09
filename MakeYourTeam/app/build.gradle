@@ -49,6 +49,9 @@ dependencies {
 
     // Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    // MP Android Chart
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
