@@ -247,6 +247,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mDatabase.child("users").child(mUser.getUid()).child("email").setValue(editEmail.getText().toString());
         mDatabase.child("users").child(mUser.getUid()).child("nickName").setValue(editNickname.getText().toString());
         mDatabase.child("users").child(mUser.getUid()).child("displayName").setValue(editDisplayName.getText().toString());
+        mDatabase.child("teams").child(dbUser.teamId).child("teamName").setValue(editTeamName.getText().toString());
 
         UserProfileChangeRequest profileUpdates;
 
