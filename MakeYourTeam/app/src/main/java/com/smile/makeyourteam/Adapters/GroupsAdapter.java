@@ -160,9 +160,9 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         }
 
         private String getUserName(User user) {
-            if(!user.displayName.isEmpty())
+            if(!user.displayName.equals(""))
                 return user.displayName;
-            if(!user.nickName.isEmpty())
+            if(!user.nickName.equals(""))
                 return user.nickName;
 
             return user.email;

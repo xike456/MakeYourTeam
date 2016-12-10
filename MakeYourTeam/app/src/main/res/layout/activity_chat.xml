@@ -23,7 +23,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:background="@drawable/sendimage"
+            android:background="@drawable/ic_image"
             android:id="@+id/btnSelecteImage"
             />
         <EditText

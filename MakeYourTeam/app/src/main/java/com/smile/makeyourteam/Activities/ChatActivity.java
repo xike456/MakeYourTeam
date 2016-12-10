@@ -2,8 +2,10 @@ package com.smile.makeyourteam.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Handler;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +20,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -74,6 +78,9 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         Notifications.isAppFocus = true;
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
 
         // Notifications.isChatActivityLaunch = true;
@@ -208,17 +215,16 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void populateViewHolder(MessageViewHolder viewHolder, Message message, int position) {
+            protected void populateViewHolder(final MessageViewHolder viewHolder, Message message, int position) {
 
                 if(message.senderId.equals(currentUserID)){
                     if(message.messages.equals("...")){
-
                         viewHolder.tvDisplayName.setVisibility(View.GONE);
                         viewHolder.tvMessage.setVisibility(View.GONE);
                         viewHolder.avatar.setVisibility(View.GONE);
                         viewHolder.ivMessage.setVisibility(View.GONE);
+                        viewHolder.progressBar.setVisibility(View.GONE);
                     }else {
-
                         //   Toast.makeText(ChatActivity.this,"khong typing",Toast.LENGTH_SHORT).show();
                         viewHolder.tvDisplayName.setVisibility(View.VISIBLE);
                         viewHolder.tvMessage.setVisibility(View.VISIBLE);
@@ -234,10 +240,27 @@ public class ChatActivity extends AppCompatActivity {
 
                         viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
                         viewHolder.tvMessage.setText(message.messages);
+
+                        viewHolder.progressBar.setVisibility(View.GONE);
                         if(!message.messageImage.equals("")){
                             viewHolder.tvMessage.setVisibility(View.GONE);
-                            Glide.with(ChatActivity.this).load(message.messageImage).into(viewHolder.ivMessage);
+                            viewHolder.ivMessage.setImageBitmap(null);
                             viewHolder.ivMessage.setVisibility(View.VISIBLE);
+                            viewHolder.progressBar.setVisibility(View.VISIBLE);
+
+                           // Glide.with(ChatActivity.this).load(message.messageImage).into(viewHolder.ivMessage);
+                            Glide.with(ChatActivity.this)
+                                    .load(message.messageImage)
+                                    .asBitmap()
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                            viewHolder.ivMessage.setImageBitmap(resource);
+                                            viewHolder.progressBar.setVisibility(View.GONE);
+                                        }
+                                    });
+
+                           // viewHolder.progressBar.setVisibility(View.GONE);
                             viewHolder.ivMessage.setMaxHeight(200);
                             viewHolder.ivMessage.setMaxWidth(150);
                         }
@@ -245,11 +268,11 @@ public class ChatActivity extends AppCompatActivity {
                 }else{
                     if(message.messages.equals("...")){
                         //Toast.makeText(ChatActivity.this,"nhan typing",Toast.LENGTH_SHORT).show();
-
                         viewHolder.tvDisplayName.setVisibility(View.GONE);
                         viewHolder.tvMessage.setVisibility(View.GONE);
                         viewHolder.avatar.setVisibility(View.GONE);
                         viewHolder.ivMessage.setVisibility(View.GONE);
+                        viewHolder.progressBar.setVisibility(View.GONE);
                     }else {
 
                         //Toast.makeText(ChatActivity.this,"khong nhan typing",Toast.LENGTH_SHORT).show();
@@ -258,7 +281,7 @@ public class ChatActivity extends AppCompatActivity {
                         viewHolder.avatar.setVisibility(View.VISIBLE);
                         viewHolder.ivMessage.setVisibility(View.GONE);
 
-                        if (message.photoUrl.length() == 0) {
+                        if (message.photoUrl != null && message.photoUrl.length() == 0) {
                             viewHolder.avatar.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
                                     R.drawable.ic_people_black_48dp));
                         } else {
@@ -273,10 +296,26 @@ public class ChatActivity extends AppCompatActivity {
 
                         viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
                         viewHolder.tvMessage.setText(message.messages);
+                        viewHolder.progressBar.setVisibility(View.GONE);
+
                         if(!message.messageImage.equals("")){
                             viewHolder.tvMessage.setVisibility(View.GONE);
-                            Glide.with(ChatActivity.this).load(message.messageImage).into(viewHolder.ivMessage);
+                            viewHolder.ivMessage.setImageBitmap(null);
                             viewHolder.ivMessage.setVisibility(View.VISIBLE);
+                            viewHolder.progressBar.setVisibility(View.VISIBLE);
+
+                           // Glide.with(ChatActivity.this).load(message.messageImage).into(viewHolder.ivMessage);
+                            Glide.with(ChatActivity.this)
+                                    .load(message.messageImage)
+                                    .asBitmap()
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                            viewHolder.ivMessage.setImageBitmap(resource);
+                                            viewHolder.progressBar.setVisibility(View.GONE);
+                                        }
+                                    });
+                          //  viewHolder.progressBar.setVisibility(View.GONE);
                             viewHolder.ivMessage.setMaxHeight(200);
                             viewHolder.ivMessage.setMaxWidth(150);
                         }
@@ -342,9 +381,10 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //Toast.makeText(this,"chat onpause",Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,"chat onpause",Toast.LENGTH_LONG).show();
         resetTyping();
         Notifications.isAppFocus = false;
+        Notifications.idGroupPerson="";
        // Notifications.isChatActivityLaunch = false;
     }
 

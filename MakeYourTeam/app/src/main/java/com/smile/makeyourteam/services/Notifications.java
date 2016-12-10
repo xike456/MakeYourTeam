@@ -54,7 +54,7 @@ public class Notifications extends Service{
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                //Toast.makeText(Notifications.this, "vao ham onChildChanged-" + isChatActivityLaunch.toString() + userID, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Notifications.this, "vao ham onChildChanged", Toast.LENGTH_SHORT).show();
                 Message message = new Message();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     message = ds.getValue(Message.class);
@@ -67,9 +67,9 @@ public class Notifications extends Service{
                 }else {
                     id = parts[1];
                 }
-
+               // Toast.makeText(Notifications.this,"send: "+message.senderId +" Current "+Firebase.firebaseAuth.getCurrentUser().getUid()+" ID group person: "+idGroupPerson + " id " +id,  Toast.LENGTH_SHORT).show();
                 if(!message.senderId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && !idGroupPerson.equals(id) ){
-                    Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
                     sendNotification(message);
                 }
             }
@@ -98,8 +98,8 @@ public class Notifications extends Service{
         userID = Firebase.firebaseAuth.getCurrentUser().getUid();
         //isChatActivityLaunch = false;
        // isAppFocus = false;
-        //idGroupPerson = "";
-        //Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        idGroupPerson = "";
+       // Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
         return START_STICKY;
     }
 
@@ -133,7 +133,9 @@ public class Notifications extends Service{
             i.putExtra(Config.ID_USER_REVEIVE, message.senderId);
             i.putExtra(Config.NAME_USER_RECEIVE, message.userName);
             i.putExtra(Config.USER_NAME,message.nameUserReceive);
-            i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+            if( Firebase.firebaseAuth.getCurrentUser().getPhotoUrl()!=null) {
+                i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+            }
         }else{
          //   Toast.makeText(this, "group", Toast.LENGTH_SHORT).show();
             title = parts[1];
@@ -142,7 +144,9 @@ public class Notifications extends Service{
             i.putExtra(Config.NAME_GROUP, parts[1]);
             String name = Firebase.firebaseAuth.getCurrentUser().getDisplayName()==null? Firebase.firebaseAuth.getCurrentUser().getEmail() :Firebase.firebaseAuth.getCurrentUser().getDisplayName();
             i.putExtra(Config.USER_NAME, name);
-            i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+            if( Firebase.firebaseAuth.getCurrentUser().getPhotoUrl()!=null) {
+                i.putExtra(Config.PHOTO_URL, Firebase.firebaseAuth.getCurrentUser().getPhotoUrl().toString());
+            }
         }
 
 
@@ -153,7 +157,7 @@ public class Notifications extends Service{
                 PendingIntent.FLAG_UPDATE_CURRENT);
         Uri defaultSoundUri = null;
 
-        Toast.makeText(this,"isAppFocus "+ isAppFocus.toString(),Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this,"isAppFocus "+ isAppFocus.toString(),Toast.LENGTH_SHORT).show();
 
 
         if(!isAppFocus){
