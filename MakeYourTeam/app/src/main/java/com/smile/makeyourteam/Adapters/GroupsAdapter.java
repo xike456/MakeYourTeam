@@ -2,6 +2,7 @@ package com.smile.makeyourteam.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -15,10 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.firebase.database.DatabaseReference;
 import com.smile.makeyourteam.Activities.AddMemberActivity;
 import com.smile.makeyourteam.Activities.ChatActivity;
@@ -48,6 +52,8 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
     private Context mContext;
     private List<Group> groups;
     private int pos;
+    private ProgressBar progressBar;
+    private ImageView imageView;
 
     public GroupsAdapter(Context mContext, List<Group> groups) {
         this.mContext = mContext;
@@ -73,17 +79,31 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
             holder.thumbnail.setImageDrawable(ContextCompat.getDrawable(mContext,
                     R.drawable.ic_people_black_48dp));
         } else {
-            holder.thumbnail.setImageDrawable(ContextCompat.getDrawable(mContext,
-                    R.drawable.loading));
+            holder.progressBarThumbnail.setVisibility(View.VISIBLE);
             Glide.with(mContext)
                     .load(group.thumbnail)
-                    .into(holder.thumbnail);
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
+                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                            holder.thumbnail.setImageBitmap(bitmapResized);
+                            holder.progressBarThumbnail.setVisibility(View.INVISIBLE);
+                        }
+                    });
+
+//            Glide.with(mContext)
+//                    .load(group.thumbnail)
+//                    .into(holder.thumbnail);
         }
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pos = position;
+                progressBar = holder.progressBarThumbnail;
+                imageView = holder.thumbnail;
                 showPopupMenu(holder.overflow);
             }
         });
@@ -108,7 +128,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.change_avatar_group:
-                    MainActivity.setThumbnailGroup((AppCompatActivity) mContext,groups.get(pos).id);
+                    MainActivity.setThumbnailGroup((AppCompatActivity) mContext,groups.get(pos).id,progressBar,imageView);
                     return true;
                 case R.id.leave_group:
                     Firebase.database.getReference("users").child(Firebase.firebaseAuth.getCurrentUser().getUid()).child("groups").child(groups.get(pos).id).removeValue();
@@ -117,6 +137,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
                     Intent intent = new Intent(mContext, AddMemberActivity.class);
                     intent.putExtra(Config.ID_GROUP, groups.get(pos).id);
                     intent.putExtra(Config.NAME_GROUP, groups.get(pos).title);
+                    intent.putExtra(Config.PHOTO_URL,groups.get(pos).thumbnail);
                     mContext.startActivity(intent);
                     return true;
                 case R.id.change_title_group:
@@ -136,6 +157,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, timeStamp;
         public ImageView thumbnail, overflow;
+        public ProgressBar progressBarThumbnail;
 
         public MyViewHolder(View view) {
             super(view);
@@ -143,6 +165,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
             timeStamp = (TextView) view.findViewById(R.id.txtTimeStamp);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
+            progressBarThumbnail = (ProgressBar) view.findViewById(R.id.progress_bar_thumbnail);
 
             thumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override

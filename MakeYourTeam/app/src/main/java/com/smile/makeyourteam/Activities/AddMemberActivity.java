@@ -40,6 +40,7 @@ public class AddMemberActivity extends AppCompatActivity {
     private String groupName;
     private String groupID;
     private Intent intent;
+    private String thumbnail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class AddMemberActivity extends AppCompatActivity {
         intent = getIntent();
         groupID = intent.getStringExtra(Config.ID_GROUP);
         groupName = intent.getStringExtra(Config.NAME_GROUP);
+        thumbnail = intent.getStringExtra(Config.PHOTO_URL);
 
         lvMember = (ListView) findViewById(R.id.listMember);
         lvMember.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -62,7 +64,7 @@ public class AddMemberActivity extends AppCompatActivity {
                 List<Boolean> checked = userAdapter.positionChecked;
                 for (int i = 0; i < checked.size(); i++) {
                     if (checked.get(i)){
-                        addMemberToGroup(groupName, groupID, uList.get(i).id);
+                        addMemberToGroup(groupName, groupID, uList.get(i).id,thumbnail);
                         Toast.makeText(AddMemberActivity.this,"Add member success",Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -112,12 +114,12 @@ public class AddMemberActivity extends AppCompatActivity {
         });
     }
 
-    private void addMemberToGroup(String groupName, String key, String mUserId) {
+    private void addMemberToGroup(String groupName, String key, String mUserId,String thumbnail) {
         DatabaseReference mDatabase = Firebase.database.getReference();
         if (mDatabase == null || mUserId == null)
             return;
 
-        Group group = new Group(key, groupName, new Date().getTime(), "");
+        Group group = new Group(key, groupName, new Date().getTime(), thumbnail);
 
         Map<String, Object> groupValue = group.toMap();
         Map<String, Object> childUpdates = new HashMap<>();

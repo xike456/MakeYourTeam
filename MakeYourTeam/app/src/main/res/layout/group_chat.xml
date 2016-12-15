@@ -16,20 +16,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/group_chat_cover_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:src="@drawable/ic_people_black_48dp"
-                android:scaleType="fitXY" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_thumbnail">
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/group_chat_cover_height"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:src="@drawable/ic_people_black_48dp"
+                    android:scaleType="fitXY" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_bar_thumbnail"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
+
+            </RelativeLayout>
 
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_below="@+id/thumbnail"
+                android:layout_below="@+id/layout_thumbnail"
                 android:id="@+id/separateLine"
                 android:layout_height="0.5dp"
                 android:background="@android:color/darker_gray" />

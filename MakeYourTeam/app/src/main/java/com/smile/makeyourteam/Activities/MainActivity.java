@@ -18,6 +18,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public static int REQUEST_CHOOSE = 1;
     public static int REQUEST_CHOOSE_IMAGE = 2;
     private static String groupID;
+    private static ProgressBar progressBar;
+    private static ImageView thumbnail;
     private  static String messageID;
 
     @Override
@@ -252,6 +257,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CHOOSE && resultCode == RESULT_OK)  {
+            thumbnail.setImageBitmap(null);
+            progressBar.setVisibility(View.VISIBLE);
             Uri uri = data.getData();
 
             StorageReference riversRef = Firebase.storageRef.child("avatarGroup/"+uri.getLastPathSegment());
@@ -268,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                   // progressBar.setVisibility(View.INVISIBLE);
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     changeThumbnailGroup(downloadUrl.toString());
                 }
@@ -278,8 +286,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
 
-    public static void setThumbnailGroup(Activity activity, String groupID){
+    public static void setThumbnailGroup(Activity activity, String groupID, ProgressBar progressBar, ImageView imageView){
         MainActivity.groupID = groupID;
+        MainActivity.progressBar = progressBar;
+        MainActivity.thumbnail = imageView;
         Intent intentPick = new Intent();
         intentPick.setAction(Intent.ACTION_GET_CONTENT);
         intentPick.setType("image/*");

@@ -33,6 +33,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.OnPausedListener;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.smile.makeyourteam.Config;
@@ -72,6 +74,8 @@ public class ChatActivity extends AppCompatActivity {
     public static String currentUserID_Clone;
     public static String id_userReceive_Clone;
 
+    private ProgressBar progressBarUpload;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +85,6 @@ public class ChatActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
 
         // Notifications.isChatActivityLaunch = true;
       //  Toast.makeText(this,"chat onCreate",Toast.LENGTH_LONG).show();
@@ -136,6 +139,7 @@ public class ChatActivity extends AppCompatActivity {
         etMessage = (EditText)findViewById(R.id.etMessage);
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
         tvTyping = (TextView) findViewById(R.id.typing);
+        progressBarUpload = (ProgressBar) findViewById(R.id.progress_bar_upload);
 
 
         final String finalCodeString = codeString;
@@ -255,10 +259,16 @@ public class ChatActivity extends AppCompatActivity {
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
                                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                            viewHolder.ivMessage.setImageBitmap(resource);
+                                            Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
+                                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                                            viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
                                         }
                                     });
+
+//                            Glide.with(ChatActivity.this)
+//                                    .load(message.messageImage)
+//                                    .into(viewHolder.ivMessage);
 
                            // viewHolder.progressBar.setVisibility(View.GONE);
                             viewHolder.ivMessage.setMaxHeight(200);
@@ -311,10 +321,16 @@ public class ChatActivity extends AppCompatActivity {
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
                                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                            viewHolder.ivMessage.setImageBitmap(resource);
+                                            Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
+                                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                                            viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
                                         }
                                     });
+//                            Glide.with(ChatActivity.this)
+//                                    .load(message.messageImage)
+//                                    .into(viewHolder.ivMessage);
+
                           //  viewHolder.progressBar.setVisibility(View.GONE);
                             viewHolder.ivMessage.setMaxHeight(200);
                             viewHolder.ivMessage.setMaxWidth(150);
@@ -397,6 +413,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CHOOSE_IMAGE && resultCode == RESULT_OK)  {
+            progressBarUpload.setVisibility(View.VISIBLE);
             Uri uri = data.getData();
 
             StorageReference riversRef = Firebase.storageRef.child("messageImage/"+uri.getLastPathSegment());
@@ -413,7 +430,7 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-
+                    progressBarUpload.setVisibility(View.INVISIBLE);
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     //changeThumbnailGroup(downloadUrl.toString());
                     DatabaseReference databaseRef = Firebase.database.getReference("message");
@@ -426,6 +443,22 @@ public class ChatActivity extends AppCompatActivity {
                     databaseRef.child(finalCodeStringUseClear).push().setValue(message);
                 }
             });
+
+            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                   // System.out.println("Upload is " + progress + "% done");
+                    int currentprogress = (int) progress;
+                    progressBarUpload.setProgress(currentprogress);
+                }
+            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
+                   // System.out.println("Upload is paused");
+                }
+            });
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
