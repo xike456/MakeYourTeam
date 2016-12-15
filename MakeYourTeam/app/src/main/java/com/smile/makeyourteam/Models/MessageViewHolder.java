@@ -1,5 +1,9 @@
 package com.smile.makeyourteam.Models;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -8,8 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.smile.makeyourteam.Activities.ChatActivity;
+import com.smile.makeyourteam.Activities.ImageChatActivity;
 import com.smile.makeyourteam.R;
+
+import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,8 +32,9 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public LinearLayout layoutChat, layoutUsername;
     public ImageView ivMessage;
     public ProgressBar progressBar;
+    public String imageLink;
 
-    public MessageViewHolder(View v) {
+    public MessageViewHolder(final View v) {
         super(v);
         tvMessage = (TextView) itemView.findViewById(R.id.chatMessage);
         tvDisplayName = (TextView) itemView.findViewById(R.id.username);
@@ -32,6 +42,17 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         layoutChat = (LinearLayout) itemView.findViewById(R.id.chat_layout);
         layoutUsername = (LinearLayout) itemView.findViewById(R.id.username_layout);
         ivMessage = (ImageView) itemView.findViewById(R.id.chatImage);
+        ivMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), ImageChatActivity.class);
+                Bitmap _bitmap = ((BitmapDrawable)ivMessage.getDrawable()).getBitmap(); // your bitmap
+                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
+                _bitmap.compress(Bitmap.CompressFormat.PNG, 50, _bs);
+                i.putExtra("byteArray", _bs.toByteArray());
+                v.getContext().startActivity(i);
+            }
+        });
         progressBar = (ProgressBar) itemView.findViewById(R.id.progressBarLoadImage);
     }
 }
