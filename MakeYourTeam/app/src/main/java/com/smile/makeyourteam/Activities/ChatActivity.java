@@ -313,6 +313,7 @@ public class ChatActivity extends AppCompatActivity {
                             viewHolder.ivMessage.setImageBitmap(null);
                             viewHolder.ivMessage.setVisibility(View.VISIBLE);
                             viewHolder.progressBar.setVisibility(View.VISIBLE);
+                            viewHolder.imageLink = message.messageImage;
 
                            // Glide.with(ChatActivity.this).load(message.messageImage).into(viewHolder.ivMessage);
                             Glide.with(ChatActivity.this)
