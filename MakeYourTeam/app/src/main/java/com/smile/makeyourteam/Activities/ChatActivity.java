@@ -219,7 +219,7 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void populateViewHolder(final MessageViewHolder viewHolder, Message message, int position) {
+            protected void populateViewHolder(final MessageViewHolder viewHolder, final Message message, int position) {
 
                 if(message.senderId.equals(currentUserID)){
                     if(message.messages.equals("...")){
@@ -263,6 +263,7 @@ public class ChatActivity extends AppCompatActivity {
                                                     (int) (resource.getWidth() * 0.8), (int) (resource.getHeight() * 0.8), false);
                                             viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
+                                            viewHolder.imageLink  = message.messageImage;
                                         }
                                     });
 
@@ -326,6 +327,7 @@ public class ChatActivity extends AppCompatActivity {
                                                     (int) (resource.getWidth() * 0.8), (int) (resource.getHeight() * 0.8), false);
                                             viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
+                                            viewHolder.imageLink = message.messageImage;
                                         }
                                     });
 //                            Glide.with(ChatActivity.this)

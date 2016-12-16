@@ -3,6 +3,8 @@ package com.smile.makeyourteam.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,12 +25,21 @@ public class ImageChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_chat);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
         ivChat = (ImageView) findViewById(R.id.iv_chat);
-        if(getIntent().hasExtra("byteArray")) {
-            byte[] bytes = getIntent().getByteArrayExtra("byteArray");
-            Bitmap _bitmap = BitmapFactory.decodeByteArray(
-                    bytes,0,bytes.length);
-            ivChat.setImageBitmap(_bitmap);
+
+        if(getIntent().hasExtra("ImageLink")) {
+            String link = getIntent().getStringExtra("ImageLink");
+            Glide.with(ImageChatActivity.this)
+                    .load(link)
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            ivChat.setImageBitmap(resource);
+                            //progressBar.setVisibility(View.GONE);
+                        }
+                    });
         }
     }
 
