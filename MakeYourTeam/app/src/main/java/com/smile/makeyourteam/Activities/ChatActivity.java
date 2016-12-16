@@ -260,7 +260,7 @@ public class ChatActivity extends AppCompatActivity {
                                         @Override
                                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                                             Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
-                                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                                                    (int) (resource.getWidth() * 0.8), (int) (resource.getHeight() * 0.8), false);
                                             viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
                                         }
@@ -271,8 +271,8 @@ public class ChatActivity extends AppCompatActivity {
 //                                    .into(viewHolder.ivMessage);
 
                            // viewHolder.progressBar.setVisibility(View.GONE);
-                            viewHolder.ivMessage.setMaxHeight(200);
-                            viewHolder.ivMessage.setMaxWidth(150);
+//                            viewHolder.ivMessage.setMaxHeight(200);
+//                            viewHolder.ivMessage.setMaxWidth(150);
                         }
                     }
                 }else{
@@ -323,7 +323,7 @@ public class ChatActivity extends AppCompatActivity {
                                         @Override
                                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                                             Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
-                                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                                                    (int) (resource.getWidth() * 0.8), (int) (resource.getHeight() * 0.8), false);
                                             viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
                                         }
@@ -333,8 +333,8 @@ public class ChatActivity extends AppCompatActivity {
 //                                    .into(viewHolder.ivMessage);
 
                           //  viewHolder.progressBar.setVisibility(View.GONE);
-                            viewHolder.ivMessage.setMaxHeight(200);
-                            viewHolder.ivMessage.setMaxWidth(150);
+//                            viewHolder.ivMessage.setMaxHeight(200);
+//                            viewHolder.ivMessage.setMaxWidth(150);
                         }
                     }
                 }

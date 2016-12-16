@@ -12,12 +12,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Config;
+import com.smile.makeyourteam.Models.Group;
 import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
@@ -60,18 +64,54 @@ public class Notifications extends Service{
                     message = ds.getValue(Message.class);
                 }
 
+                final String currentUserID = Firebase.firebaseAuth.getCurrentUser().getUid();
                 String[] parts = message.nameUserReceive.split("-");
                 String id = "";
+
+                // person to person
                 if(parts.length == 1){
                     id = message.userName;
-                }else {
+                    if(!message.senderId.equals(currentUserID) && message.receiveId.equals(currentUserID) && !idGroupPerson.equals(id) ){
+                        //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+                        sendNotification(message);
+                    }
+                }else { // person to group
                     id = parts[1];
+                  //  Toast.makeText(Notifications.this,"Chat group",Toast.LENGTH_LONG).show();
+                    DatabaseReference mDatabase = Firebase.database.getReference();
+                    DatabaseReference mRef = mDatabase.child("users").child(currentUserID).child("groups");
+
+                    final Message finalMessage = message;
+                    final String nameGroup = id;
+                    mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                              //  Toast.makeText(Notifications.this,finalMessage.receiveId,Toast.LENGTH_LONG).show();
+                                if(ds.getKey().equals(finalMessage.receiveId)){
+                                    if(!finalMessage.senderId.equals(currentUserID) && !idGroupPerson.equals(nameGroup) ){
+                                        //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+                                        sendNotification(finalMessage);
+                                       // Toast.makeText(Notifications.this,"send noti",Toast.LENGTH_LONG).show();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
-               // Toast.makeText(Notifications.this,"send: "+message.senderId +" Current "+Firebase.firebaseAuth.getCurrentUser().getUid()+" ID group person: "+idGroupPerson + " id " +id,  Toast.LENGTH_SHORT).show();
-                if(!message.senderId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && !idGroupPerson.equals(id) ){
-                    //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
-                    sendNotification(message);
-                }
+
+//               // Toast.makeText(Notifications.this,"send: "+message.senderId +" Current "+Firebase.firebaseAuth.getCurrentUser().getUid()+" ID group person: "+idGroupPerson + " id " +id,  Toast.LENGTH_SHORT).show();
+//                if(!message.senderId.equals(Firebase.firebaseAuth.getCurrentUser().getUid()) && !idGroupPerson.equals(id) ){
+//                    //Toast.makeText(Notifications.this,"send noti", Toast.LENGTH_SHORT).show();
+//                    sendNotification(message);
+//                }
             }
 
             @Override
