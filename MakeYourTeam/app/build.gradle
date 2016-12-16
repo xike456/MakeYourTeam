@@ -50,6 +50,8 @@ dependencies {
     // Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
+    compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
+
     // MP Android Chart
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 }
