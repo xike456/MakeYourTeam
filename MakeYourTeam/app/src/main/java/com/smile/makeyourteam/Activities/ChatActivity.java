@@ -2,6 +2,7 @@ package com.smile.makeyourteam.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -45,7 +47,9 @@ import com.smile.makeyourteam.server.Firebase;
 import com.smile.makeyourteam.services.Notifications;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class ChatActivity extends AppCompatActivity {
@@ -75,6 +79,7 @@ public class ChatActivity extends AppCompatActivity {
     public static String id_userReceive_Clone;
 
     private ProgressBar progressBarUpload;
+    private List<Bitmap> bitmapList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +225,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             protected void populateViewHolder(final MessageViewHolder viewHolder, final Message message, int position) {
-
+                viewHolder.ivMessage.setBackground(null);
                 if(message.senderId.equals(currentUserID)){
                     if(message.messages.equals("...")){
                         viewHolder.tvDisplayName.setVisibility(View.GONE);
@@ -238,7 +243,7 @@ public class ChatActivity extends AppCompatActivity {
                         viewHolder.avatar.setImageDrawable(null);
                         viewHolder.avatar.setVisibility(View.INVISIBLE);
                         viewHolder.tvMessage.setBackgroundResource(R.drawable.in_message_bg);
-                        viewHolder.ivMessage.setBackgroundResource(R.drawable.in_message_bg);
+                      //  viewHolder.ivMessage.setBackgroundResource(R.drawable.in_message_bg);
                         viewHolder.layoutUsername.setLayoutParams(paramsMsgRight);
                         viewHolder.layoutChat.setLayoutParams(paramsMsgRight);
 
@@ -259,10 +264,18 @@ public class ChatActivity extends AppCompatActivity {
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
                                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                            recycleBitmap();
                                             Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
-                                                    (int) (resource.getWidth() * 0.8), (int) (resource.getHeight() * 0.8), false);
+                                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                                            bitmapList.add(bitmapResized);
+
+//                                            if(resource!=null){
+//                                                resource.recycle();
+//                                                resource = null;
+//                                            }
                                             viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
+                                            viewHolder.ivMessage.setBackgroundResource(R.drawable.in_message_bg);
                                             viewHolder.imageLink  = message.messageImage;
                                         }
                                     });
@@ -272,8 +285,9 @@ public class ChatActivity extends AppCompatActivity {
 //                                    .into(viewHolder.ivMessage);
 
                            // viewHolder.progressBar.setVisibility(View.GONE);
-//                            viewHolder.ivMessage.setMaxHeight(200);
-//                            viewHolder.ivMessage.setMaxWidth(150);
+                            viewHolder.ivMessage.setMinimumWidth(50);
+                            viewHolder.ivMessage.setMinimumHeight(50);
+                            viewHolder.ivMessage.setMaxHeight(800);
                         }
                     }
                 }else{
@@ -301,7 +315,7 @@ public class ChatActivity extends AppCompatActivity {
                                     .into(viewHolder.avatar);
                         }
                         viewHolder.tvMessage.setBackgroundResource(R.drawable.out_message_bg);
-                        viewHolder.ivMessage.setBackgroundResource(R.drawable.out_message_bg);
+                       // viewHolder.ivMessage.setBackgroundResource(R.drawable.out_message_bg);
                         viewHolder.layoutUsername.setLayoutParams(paramsMsgLeft);
                         viewHolder.layoutChat.setLayoutParams(paramsMsgLeft);
 
@@ -323,10 +337,19 @@ public class ChatActivity extends AppCompatActivity {
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
                                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                            recycleBitmap();
                                             Bitmap bitmapResized = Bitmap.createScaledBitmap(resource,
-                                                    (int) (resource.getWidth() * 0.8), (int) (resource.getHeight() * 0.8), false);
+                                                    (int) (resource.getWidth() * 0.5), (int) (resource.getHeight() * 0.5), false);
+                                            bitmapList.add(bitmapResized);
+
+//                                            if(resource!=null){
+//                                                resource.recycle();
+//                                                resource = null;
+//                                            }
+
                                             viewHolder.ivMessage.setImageBitmap(bitmapResized);
                                             viewHolder.progressBar.setVisibility(View.GONE);
+                                            viewHolder.ivMessage.setBackgroundResource(R.drawable.out_message_bg);
                                             viewHolder.imageLink = message.messageImage;
                                         }
                                     });
@@ -335,8 +358,9 @@ public class ChatActivity extends AppCompatActivity {
 //                                    .into(viewHolder.ivMessage);
 
                           //  viewHolder.progressBar.setVisibility(View.GONE);
-//                            viewHolder.ivMessage.setMaxHeight(200);
-//                            viewHolder.ivMessage.setMaxWidth(150);
+                            viewHolder.ivMessage.setMinimumWidth(50);
+                            viewHolder.ivMessage.setMinimumHeight(50);
+                            viewHolder.ivMessage.setMaxHeight(400);
                         }
                     }
                 }
@@ -488,5 +512,16 @@ public class ChatActivity extends AppCompatActivity {
         intentPick.setAction(Intent.ACTION_GET_CONTENT);
         intentPick.setType("image/*");
         activity.startActivityForResult(intentPick,REQUEST_CHOOSE_IMAGE);
+    }
+
+    private void recycleBitmap(){
+        if(bitmapList.size()>5){
+           Bitmap bitmap = bitmapList.get(0);
+            bitmapList.remove(0);
+            if(bitmap!=null){
+                bitmap.recycle();
+                bitmap=null;
+            }
+        }
     }
 }
