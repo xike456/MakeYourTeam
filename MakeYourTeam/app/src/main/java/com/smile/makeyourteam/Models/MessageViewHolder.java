@@ -45,12 +45,10 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         ivMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Toast.makeText(view.getContext(), "clicked " + imageLink, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(view.getContext(), ImageChatActivity.class);
-                Bitmap _bitmap = ((BitmapDrawable)ivMessage.getDrawable()).getBitmap(); // your bitmap
-                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                _bitmap.compress(Bitmap.CompressFormat.PNG, 50, _bs);
-                i.putExtra("byteArray", _bs.toByteArray());
-                v.getContext().startActivity(i);
+                i.putExtra("ImageLink", imageLink);
+                view.getContext().startActivity(i);
             }
         });
         progressBar = (ProgressBar) itemView.findViewById(R.id.progressBarLoadImage);
