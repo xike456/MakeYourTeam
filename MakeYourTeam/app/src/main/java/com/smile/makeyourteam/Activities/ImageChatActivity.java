@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.smile.makeyourteam.R;
 
 public class ImageChatActivity extends AppCompatActivity {
@@ -30,16 +31,7 @@ public class ImageChatActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("ImageLink")) {
             String link = getIntent().getStringExtra("ImageLink");
-            Glide.with(ImageChatActivity.this)
-                    .load(link)
-                    .asBitmap()
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                            ivChat.setImageBitmap(resource);
-                            //progressBar.setVisibility(View.GONE);
-                        }
-                    });
+            UrlImageViewHelper.setUrlDrawable(ivChat, link, R.drawable.image_placeholder);
         }
     }
 
