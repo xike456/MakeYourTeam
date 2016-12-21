@@ -2,10 +2,8 @@ package com.smile.makeyourteam.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +12,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -54,7 +53,7 @@ import java.util.TimeZone;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private Button btnSend, btnSelecteImage;
+    private Button btnSend, btnSelecteImage, btnSelectFile;
     private RecyclerView rcvMessage;
     private EditText etMessage;
 
@@ -73,8 +72,9 @@ public class ChatActivity extends AppCompatActivity {
     private String finalCodeStringUseClear;
     private String currentUserIdReset;
 
-    private static String messageID;
     public static int REQUEST_CHOOSE_IMAGE = 2;
+    public static int REQUEST_CHOOSE_FILE = 707;
+
     public static String currentUserID_Clone;
     public static String id_userReceive_Clone;
 
@@ -140,6 +140,7 @@ public class ChatActivity extends AppCompatActivity {
 
         btnSend = (Button) findViewById(R.id.btnSend);
         btnSelecteImage = (Button) findViewById(R.id.btnSelecteImage);
+        btnSelectFile = (Button) findViewById(R.id.btnSelecteFile);
 
         etMessage = (EditText)findViewById(R.id.etMessage);
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
@@ -201,6 +202,13 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        btnSelectFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickFileSend();
+            }
+        });
+
         final LinearLayout.LayoutParams paramsMsgRight = new LinearLayout.
                 LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -248,7 +256,17 @@ public class ChatActivity extends AppCompatActivity {
                         viewHolder.layoutChat.setLayoutParams(paramsMsgRight);
 
                         viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
-                        viewHolder.tvMessage.setText(message.messages);
+
+                        if(!message.fileName.equals("")){
+                            SpannableString content = new SpannableString(message.messages);
+                            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                            viewHolder.tvMessage.setText(content);
+                            viewHolder.isFile = true;
+                            viewHolder.fileUrl = message.fileUrl;
+                        }else {
+                            viewHolder.tvMessage.setText(message.messages);
+                            viewHolder.isFile = false;
+                        }
 
                         viewHolder.progressBar.setVisibility(View.GONE);
                         if(!message.messageImage.equals("")){
@@ -320,7 +338,16 @@ public class ChatActivity extends AppCompatActivity {
                         viewHolder.layoutChat.setLayoutParams(paramsMsgLeft);
 
                         viewHolder.tvDisplayName.setText(message.userName + "  " + timestampToHour(message.timestamp));
-                        viewHolder.tvMessage.setText(message.messages);
+                        if(!message.fileName.equals("")){
+                            SpannableString content = new SpannableString(message.messages);
+                            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                            viewHolder.tvMessage.setText(content);
+                            viewHolder.isFile = true;
+                            viewHolder.fileUrl = message.fileUrl;
+                        }else {
+                            viewHolder.tvMessage.setText(message.messages);
+                            viewHolder.isFile = false;
+                        }
                         viewHolder.progressBar.setVisibility(View.GONE);
 
                         if(!message.messageImage.equals("")){
@@ -412,6 +439,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -459,7 +487,6 @@ public class ChatActivity extends AppCompatActivity {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     progressBarUpload.setVisibility(View.INVISIBLE);
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    //changeThumbnailGroup(downloadUrl.toString());
                     DatabaseReference databaseRef = Firebase.database.getReference("message");
                     Message message;
                     if(isGroupChat){
@@ -475,14 +502,62 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                   // System.out.println("Upload is " + progress + "% done");
                     int currentprogress = (int) progress;
                     progressBarUpload.setProgress(currentprogress);
                 }
             }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
-                   // System.out.println("Upload is paused");
+
+                }
+            });
+
+        }
+        if(requestCode == REQUEST_CHOOSE_FILE && resultCode == RESULT_OK)  {
+            Uri uri = data.getData();
+            progressBarUpload.setVisibility(View.VISIBLE);
+
+            StorageReference riversRef = Firebase.storageRef.child("messageFile/"+uri.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(uri);
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    String e = exception.toString();
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    progressBarUpload.setVisibility(View.INVISIBLE);
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                    DatabaseReference databaseRef = Firebase.database.getReference("message");
+                    Message message;
+                    if(isGroupChat){
+                        message = new Message(userName, new Date().getTime(),taskSnapshot.getMetadata().getName(), currentUserID_Clone, idGroup,
+                                photoUrl, "G-"+nameGroup,"",taskSnapshot.getMetadata().getName(),downloadUrl.toString(),taskSnapshot.getMetadata().getSizeBytes());
+                    }else {
+                        message = new Message(userName, new Date().getTime(),taskSnapshot.getMetadata().getName(), currentUserID_Clone, id_userReceive_Clone, photoUrl, nameUserReceive,"",
+                                taskSnapshot.getMetadata().getName(),downloadUrl.toString(),taskSnapshot.getMetadata().getSizeBytes());
+                    }
+                    databaseRef.child(finalCodeStringUseClear).push().setValue(message);
+                }
+            });
+
+            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    int currentprogress = (int) progress;
+                    progressBarUpload.setProgress(currentprogress);
+                }
+            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
+
                 }
             });
 
@@ -506,12 +581,19 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    public static void setImageSend(Activity activity){
-        //ChatActivity.messageID = messageID;
+    private void setImageSend(Activity activity){
         Intent intentPick = new Intent();
         intentPick.setAction(Intent.ACTION_GET_CONTENT);
         intentPick.setType("image/*");
         activity.startActivityForResult(intentPick,REQUEST_CHOOSE_IMAGE);
+    }
+
+    private void pickFileSend() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        startActivityForResult(intent,REQUEST_CHOOSE_FILE);
     }
 
     private void recycleBitmap(){

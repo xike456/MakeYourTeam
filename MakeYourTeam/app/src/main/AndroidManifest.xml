@@ -33,6 +33,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>

@@ -3,6 +3,7 @@ package com.smile.makeyourteam.Models;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -33,6 +34,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public ImageView ivMessage;
     public ProgressBar progressBar;
     public String imageLink;
+    public Boolean isFile;
+    public String fileUrl;
 
     public MessageViewHolder(final View v) {
         super(v);
@@ -45,12 +48,21 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         ivMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(view.getContext(), "clicked " + imageLink, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(view.getContext(), ImageChatActivity.class);
                 i.putExtra("ImageLink", imageLink);
                 view.getContext().startActivity(i);
             }
         });
         progressBar = (ProgressBar) itemView.findViewById(R.id.progressBarLoadImage);
+
+        tvMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isFile){
+                    Intent dowload = new Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl));
+                    view.getContext().startActivity(dowload);
+                }
+            }
+        });
     }
 }
