@@ -43,7 +43,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.ChatActivity" />
+        <activity android:name=".Activities.ChatActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".Activities.SearchMessageActivity" />
+        </activity>
         <activity android:name=".Activities.JoinTeamActivity" />
         <activity android:name=".Activities.WelcomeActivity" />
         <activity android:name=".Activities.CreateTeamActivity" />
@@ -54,7 +58,14 @@
         <activity android:name=".Activities.AddMemberActivity" />
         <activity android:name=".Activities.TaskActivity" />
         <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.ImageChatActivity"></activity>
-    </application>
+        <activity android:name=".Activities.ImageChatActivity" />
+        <activity android:name=".Activities.SearchMessageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+</application>
 
 </manifest>

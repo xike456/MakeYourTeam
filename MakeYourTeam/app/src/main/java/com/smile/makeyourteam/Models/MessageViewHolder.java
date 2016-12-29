@@ -36,9 +36,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public String imageLink;
     public Boolean isFile;
     public String fileUrl;
+    public LinearLayout chat;
 
     public MessageViewHolder(final View v) {
         super(v);
+        chat = (LinearLayout) itemView.findViewById(R.id.chat_item_layout);
         tvMessage = (TextView) itemView.findViewById(R.id.chatMessage);
         tvDisplayName = (TextView) itemView.findViewById(R.id.username);
         avatar = (CircleImageView) itemView.findViewById(R.id.avatar);

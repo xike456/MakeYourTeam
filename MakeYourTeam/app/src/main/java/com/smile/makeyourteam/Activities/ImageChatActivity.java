@@ -31,7 +31,7 @@ public class ImageChatActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("ImageLink")) {
             String link = getIntent().getStringExtra("ImageLink");
-            //UrlImageViewHelper.setUrlDrawable(ivChat, link, R.drawable.image_placeholder);
+            UrlImageViewHelper.setUrlDrawable(ivChat, link, R.drawable.image_placeholder);
         }
     }
 
