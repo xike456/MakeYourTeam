@@ -467,6 +467,8 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 }
 
+                viewHolder.codeStringMessage = codeStringMessage;
+                viewHolder.currentUserID_Clone = currentUserID;
             }
         };
 
@@ -519,7 +521,7 @@ public class ChatActivity extends AppCompatActivity {
         etMessage.setAdapter(adapterUser);
         etMessage.setThreshold(1);
 
-        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(getApplicationContext(), R.color.com_facebook_blue), null);
+        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(getApplicationContext(), R.color.colorHashTag), null);
         mTextHashTagHelper.handle(etMessage);
     }
 
@@ -534,19 +536,14 @@ public class ChatActivity extends AppCompatActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
-//        searchView.setSearchableInfo(
-//                searchManager.getSearchableInfo(getComponentName()));
+
         Bundle appData = new Bundle();
         appData.putString("messageID", codeStringMessage);
         appData.putString("currentUserID", currentUserID_Clone);
         searchView.setAppSearchData(appData);
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//        if(searchManager.getSearchableInfo(getComponentName())!=null){
-//            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-//        }else{
-//            Toast.makeText(this, "false", Toast.LENGTH_SHORT).show();
-//        }
+
         return true;
     }
 
