@@ -54,6 +54,9 @@ dependencies {
 
     // MP Android Chart
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+
+    // Hashtag helper
+    compile 'com.github.danylovolokh:hashtag-helper:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

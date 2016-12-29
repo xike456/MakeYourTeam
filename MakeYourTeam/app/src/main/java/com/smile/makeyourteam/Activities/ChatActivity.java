@@ -17,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.Gravity;
@@ -24,9 +26,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +43,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.OnProgressListener;
@@ -48,9 +52,11 @@ import com.google.firebase.storage.UploadTask;
 import com.smile.makeyourteam.Config;
 import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.Models.MessageViewHolder;
+import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 import com.smile.makeyourteam.services.Notifications;
+import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +68,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnSend, btnSelecteImage, btnSelectFile;
     private RecyclerView rcvMessage;
-    private EditText etMessage;
+    private MultiAutoCompleteTextView etMessage;
+    private HashTagHelper mTextHashTagHelper;
 
     private LinearLayoutManager mLinearLayoutManager;
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
@@ -87,6 +94,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private ProgressBar progressBarUpload;
     private List<Bitmap> bitmapList = new ArrayList<>();
+    private List<String> uList = new ArrayList<>();
+    private ArrayAdapter<String> adapterUser;
 
     public String codeStringMessage;
 
@@ -153,7 +162,7 @@ public class ChatActivity extends AppCompatActivity {
         btnSelecteImage = (Button) findViewById(R.id.btnSelecteImage);
         btnSelectFile = (Button) findViewById(R.id.btnSelecteFile);
 
-        etMessage = (EditText)findViewById(R.id.etMessage);
+        etMessage = (MultiAutoCompleteTextView) findViewById(R.id.etMessage);
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
         tvTyping = (TextView) findViewById(R.id.typing);
         progressBarUpload = (ProgressBar) findViewById(R.id.progress_bar_upload);
@@ -161,6 +170,61 @@ public class ChatActivity extends AppCompatActivity {
 
         final String finalCodeString = codeString;
         finalCodeStringUseClear = codeString;
+
+        etMessage.setTokenizer(new MultiAutoCompleteTextView.Tokenizer() {
+            @Override
+            public int findTokenStart(CharSequence text, int cursor) {
+                int i = cursor;
+
+                while (i > 0 && text.charAt(i - 1) != '#') {
+                    i--;
+                }
+
+                //Check if token really started with #, else we don't have a valid token
+                if (i < 1 || text.charAt(i - 1) != '#') {
+                    return cursor;
+                }
+
+                return i;
+            }
+
+            @Override
+            public int findTokenEnd(CharSequence text, int cursor) {
+                int i = cursor;
+                int len = text.length();
+
+                while (i < len) {
+                    if (text.charAt(i) == ' ') {
+                        return i;
+                    } else {
+                        i++;
+                    }
+                }
+
+                return len;
+            }
+
+            @Override
+            public CharSequence terminateToken(CharSequence text) {
+                int i = text.length();
+
+                while (i > 0 && text.charAt(i - 1) == ' ') {
+                    i--;
+                }
+
+                if (i > 0 && text.charAt(i - 1) == ' ') {
+                    return text;
+                } else {
+                    if (text instanceof Spanned) {
+                        SpannableString sp = new SpannableString(text + " ");
+                        TextUtils.copySpansFrom((Spanned) text, 0, text.length(), Object.class, sp, 0);
+                        return sp;
+                    } else {
+                        return text + " ";
+                    }
+                }
+            }
+        });
 
         etMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -448,6 +512,15 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        LoadUser();
+
+        adapterUser = new ArrayAdapter<String>(this, R.layout.drop_down_hashtag, uList);
+        etMessage.setAdapter(adapterUser);
+        etMessage.setThreshold(1);
+
+        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(getApplicationContext(), R.color.com_facebook_blue), null);
+        mTextHashTagHelper.handle(etMessage);
     }
 
 
@@ -642,5 +715,39 @@ public class ChatActivity extends AppCompatActivity {
                 bitmap=null;
             }
         }
+    }
+
+    void LoadUser(){
+        DatabaseReference database = Firebase.database.getReference("users");
+        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.currentUser.teamId).endAt(MainActivity.currentUser.teamId);
+        myTopPostsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Toast.makeText(AddMemberActivity.this,"myTopPostsQuery chay ",Toast.LENGTH_SHORT).show();
+                uList.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    final User user = ds.getValue(User.class);
+                    uList.add(getDisplayName(user));
+                }
+
+                adapterUser = new ArrayAdapter<String>(getApplicationContext(), R.layout.drop_down_hashtag, uList);
+                etMessage.setAdapter(adapterUser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private String getDisplayName(User user) {
+        if (!user.displayName.isEmpty()) {
+            return user.displayName;
+        }
+        if (!user.nickName.isEmpty()) {
+            return user.nickName;
+        }
+        return user.email;
     }
 }

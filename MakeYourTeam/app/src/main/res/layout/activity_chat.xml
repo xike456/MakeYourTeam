@@ -35,7 +35,7 @@
             android:id="@+id/btnSelecteFile"
             android:layout_toRightOf="@+id/btnSelecteImage"
             />
-        <EditText
+        <MultiAutoCompleteTextView
             android:id="@+id/etMessage"
             android:lines="2"
             android:ellipsize="none"

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Activities.ImageChatActivity;
 import com.smile.makeyourteam.R;
+import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.io.ByteArrayOutputStream;
 
@@ -36,6 +38,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public String imageLink;
     public Boolean isFile;
     public String fileUrl;
+    private HashTagHelper mTextHashTagHelper;
     public LinearLayout chat;
 
     public MessageViewHolder(final View v) {
@@ -66,5 +69,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
+        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(v.getContext(), R.color.com_facebook_blue), null);
+        mTextHashTagHelper.handle(tvMessage);
     }
 }
