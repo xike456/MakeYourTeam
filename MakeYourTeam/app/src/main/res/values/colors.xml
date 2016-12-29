@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00695c</color>
+    <color name="colorHashTag">#FF5722</color>
     <color name="colorAccent">#8e44ad</color>
     <color name="white">#ffffff</color>
     <color name="bgTabs">#f8f8f8</color>

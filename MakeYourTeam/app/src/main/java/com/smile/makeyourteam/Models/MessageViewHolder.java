@@ -1,11 +1,16 @@
 package com.smile.makeyourteam.Models;
 
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.Toast;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Activities.ImageChatActivity;
 import com.smile.makeyourteam.R;
+import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.io.ByteArrayOutputStream;
 
@@ -36,6 +42,9 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     public String imageLink;
     public Boolean isFile;
     public String fileUrl;
+    public String currentUserID_Clone;
+    public String codeStringMessage;
+    private HashTagHelper mTextHashTagHelper;
     public LinearLayout chat;
 
     public MessageViewHolder(final View v) {
@@ -66,5 +75,22 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
+        SearchManager searchManager =
+                (SearchManager) v.getContext().getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = new SearchView(v.getContext());
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(((Activity) v.getContext()).getComponentName()));
+
+        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(v.getContext(), R.color.colorHashTag), new HashTagHelper.OnHashTagClickListener() {
+            @Override
+            public void onHashTagClicked(String hashTag) {
+                Bundle appData = new Bundle();
+                appData.putString("messageID", codeStringMessage);
+                appData.putString("currentUserID", currentUserID_Clone);
+                searchView.setAppSearchData(appData);
+                searchView.setQuery("#" + hashTag, true);
+            }
+        });
+        mTextHashTagHelper.handle(tvMessage);
     }
 }
