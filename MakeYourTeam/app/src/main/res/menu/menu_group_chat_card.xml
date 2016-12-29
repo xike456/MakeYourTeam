@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/change_avatar_group"
+        android:orderInCategory="100"
+        android:title="@string/change_avatar" />
+    <item
+        android:id="@+id/change_title_group"
+        android:orderInCategory="101"
+        android:title="@string/change_title" />
+
+    <item
+        android:id="@+id/add_member"
+        android:orderInCategory="102"
+        android:title="@string/add_member" />
+
+    <item
+        android:id="@+id/leave_group"
+        android:orderInCategory="103"
+        android:title="@string/leave_group" />
+</menu>

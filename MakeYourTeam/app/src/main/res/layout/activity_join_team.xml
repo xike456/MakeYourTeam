@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_join_team"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/bgViewTabs"
+    tools:context="com.smile.makeyourteam.Activities.JoinTeamActivity">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/txtTitle"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:text="Sign in to your team"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtPin"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="@string/PIN"
+        android:layout_below="@id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:inputType="text"
+        android:id="@+id/editPin"
+        android:hint="PIN"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:maxLength="6"
+        android:textAlignment="center"
+        android:textColorHint="@color/grey"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtPin"
+        android:background="@drawable/editbox_border"
+        android:layout_width="200dp"
+        android:layout_height="60dp" />
+
+    <Button
+        android:id="@+id/btnJoin"
+        android:text="Continue"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/green_button"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/editPin"
+        android:layout_centerHorizontal="true"
+        android:layout_width="250dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:layout_marginTop="40dp"
+        android:text="Create new team"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/greeny_button"
+        android:layout_below="@id/btnJoin"
+        android:layout_centerHorizontal="true"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnCreateTeam"/>
+
+</RelativeLayout>
