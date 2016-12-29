@@ -76,7 +76,7 @@
          />
 
         <TextView
-            android:layout_above="@+id/progress_bar_upload"
+            android:layout_above="@+id/linearlayout_progress_bar_upload"
             android:id="@+id/typing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,14 +89,30 @@
             android:layout_marginLeft="5dp"
             android:visibility="invisible"/>
 
-        <ProgressBar
-            android:layout_marginRight="12dp"
-            android:layout_alignParentBottom="true"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progress_bar_upload"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:visibility="invisible"/>
+            android:layout_alignParentBottom="true"
+            android:id="@+id/linearlayout_progress_bar_upload"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:layout_marginRight="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_upload"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:visibility="visible"/>
+            <Button
+                android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/stop_donwload"
+                android:id="@+id/btn_stop_upload"/>
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

@@ -87,6 +87,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private ProgressBar progressBarUpload;
     private List<Bitmap> bitmapList = new ArrayList<>();
+    private Button btnStopUpload;
+    private  UploadTask uploadTask;
 
     public String codeStringMessage;
 
@@ -157,7 +159,7 @@ public class ChatActivity extends AppCompatActivity {
         rcvMessage = (RecyclerView)findViewById(R.id.rcvMessage);
         tvTyping = (TextView) findViewById(R.id.typing);
         progressBarUpload = (ProgressBar) findViewById(R.id.progress_bar_upload);
-
+        btnStopUpload = (Button) findViewById(R.id.btn_stop_upload);
 
         final String finalCodeString = codeString;
         finalCodeStringUseClear = codeString;
@@ -217,6 +219,13 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 pickFileSend();
+            }
+        });
+
+        btnStopUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadTask.cancel();
             }
         });
 
@@ -509,7 +518,7 @@ public class ChatActivity extends AppCompatActivity {
             Uri uri = data.getData();
 
             StorageReference riversRef = Firebase.storageRef.child("messageImage/"+uri.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(uri);
+            uploadTask = riversRef.putFile(uri);
 
             // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
