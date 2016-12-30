@@ -96,7 +96,7 @@ public class ChatActivity extends AppCompatActivity {
     private List<Bitmap> bitmapList = new ArrayList<>();
 
     private Button btnStopUpload;
-    private  UploadTask uploadTask;
+    private UploadTask uploadTask;
 
     private List<String> uList = new ArrayList<>();
     private ArrayAdapter<String> adapterUser;
@@ -292,7 +292,15 @@ public class ChatActivity extends AppCompatActivity {
         btnStopUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadTask.cancel();
+                if(uploadTask != null){
+                    uploadTask.cancel();
+                    progressBarUpload.setVisibility(View.INVISIBLE);
+                    btnStopUpload.setVisibility(View.INVISIBLE);
+                    Toast.makeText(ChatActivity.this,"Upload file is cancel",Toast.LENGTH_LONG).show();
+                }else {
+
+                }
+
             }
         });
 
@@ -319,7 +327,7 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void populateViewHolder(final MessageViewHolder viewHolder, final Message message, int position) {
+            protected void populateViewHolder(final MessageViewHolder viewHolder, final  Message message, int position) {
                 viewHolder.ivMessage.setBackground(null);
                 if(message.senderId.equals(currentUserID)){
                     if(message.messages.equals("...")){
@@ -350,6 +358,7 @@ public class ChatActivity extends AppCompatActivity {
                             viewHolder.tvMessage.setText(content);
                             viewHolder.isFile = true;
                             viewHolder.fileUrl = message.fileUrl;
+                            Toast.makeText(ChatActivity.this,"underline",Toast.LENGTH_LONG).show();
                         }else {
                             viewHolder.tvMessage.setText(message.messages);
                             viewHolder.isFile = false;
@@ -587,13 +596,16 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CHOOSE_IMAGE && resultCode == RESULT_OK)  {
-            progressBarUpload.setVisibility(View.VISIBLE);
+           // progressBarUpload.setVisibility(View.VISIBLE);
             Uri uri = data.getData();
 
             StorageReference riversRef = Firebase.storageRef.child("messageImage/"+uri.getLastPathSegment());
+            progressBarUpload.setVisibility(View.VISIBLE);
+            btnStopUpload.setVisibility(View.VISIBLE);
             uploadTask = riversRef.putFile(uri);
 
             // Register observers to listen for when the download is done or if it fails
+
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
@@ -605,6 +617,7 @@ public class ChatActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     progressBarUpload.setVisibility(View.INVISIBLE);
+                    btnStopUpload.setVisibility(View.INVISIBLE);
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     DatabaseReference databaseRef = Firebase.database.getReference("message");
                     Message message;
@@ -632,12 +645,15 @@ public class ChatActivity extends AppCompatActivity {
             });
 
         }
+
         if(requestCode == REQUEST_CHOOSE_FILE && resultCode == RESULT_OK)  {
             Uri uri = data.getData();
-            progressBarUpload.setVisibility(View.VISIBLE);
+            //progressBarUpload.setVisibility(View.VISIBLE);
 
             StorageReference riversRef = Firebase.storageRef.child("messageFile/"+uri.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(uri);
+            progressBarUpload.setVisibility(View.VISIBLE);
+            btnStopUpload.setVisibility(View.VISIBLE);
+            uploadTask = riversRef.putFile(uri);
 
             // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -651,6 +667,7 @@ public class ChatActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     progressBarUpload.setVisibility(View.INVISIBLE);
+                    btnStopUpload.setVisibility(View.INVISIBLE);
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                     DatabaseReference databaseRef = Firebase.database.getReference("message");

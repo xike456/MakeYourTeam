@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/progress_bar_upload"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:visibility="visible"/>
+                android:visibility="invisible"/>
             <Button
                 android:layout_marginRight="10dp"
                 android:paddingLeft="10dp"
@@ -110,7 +110,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/stop_donwload"
-                android:id="@+id/btn_stop_upload"/>
+                android:id="@+id/btn_stop_upload"
+                android:visibility="invisible"/>
         </RelativeLayout>
 
 
