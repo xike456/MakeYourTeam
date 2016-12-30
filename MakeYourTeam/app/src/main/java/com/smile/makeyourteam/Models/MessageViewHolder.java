@@ -81,6 +81,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         final SearchView searchView = new SearchView(v.getContext());
         searchView.setSearchableInfo(searchManager.getSearchableInfo(((Activity) v.getContext()).getComponentName()));
 
+        char[] additionalSymbols = new char[]{ '_' ,'$', '.'};
         mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(v.getContext(), R.color.colorHashTag), new HashTagHelper.OnHashTagClickListener() {
             @Override
             public void onHashTagClicked(String hashTag) {
@@ -90,7 +91,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                 searchView.setAppSearchData(appData);
                 searchView.setQuery("#" + hashTag, true);
             }
-        });
+        }, additionalSymbols);
         mTextHashTagHelper.handle(tvMessage);
     }
 }

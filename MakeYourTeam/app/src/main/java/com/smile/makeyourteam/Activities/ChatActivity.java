@@ -542,7 +542,8 @@ public class ChatActivity extends AppCompatActivity {
         etMessage.setAdapter(adapterUser);
         etMessage.setThreshold(1);
 
-        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(getApplicationContext(), R.color.colorHashTag), null);
+        char[] additionalSymbols = new char[]{ '_' ,'$', '.'};
+        mTextHashTagHelper = HashTagHelper.Creator.create(ContextCompat.getColor(getApplicationContext(), R.color.colorHashTag), null, additionalSymbols);
         mTextHashTagHelper.handle(etMessage);
     }
 
