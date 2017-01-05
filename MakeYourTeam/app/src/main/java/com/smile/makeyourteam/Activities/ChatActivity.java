@@ -24,6 +24,7 @@ import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -101,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
     private List<String> uList = new ArrayList<>();
     private ArrayAdapter<String> adapterUser;
 
+    private Boolean isFilterFile = false;
 
     public String codeStringMessage;
 
@@ -358,14 +360,22 @@ public class ChatActivity extends AppCompatActivity {
                             viewHolder.tvMessage.setText(content);
                             viewHolder.isFile = true;
                             viewHolder.fileUrl = message.fileUrl;
-                            Toast.makeText(ChatActivity.this,"underline",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(ChatActivity.this,"underline",Toast.LENGTH_LONG).show();
                         }else {
-                            viewHolder.tvMessage.setText(message.messages);
+                            if (!isFilterFile){
+                                viewHolder.tvMessage.setText(message.messages);
+                            } else{
+                                viewHolder.tvDisplayName.setVisibility(View.GONE);
+                                viewHolder.tvMessage.setVisibility(View.GONE);
+                                viewHolder.avatar.setVisibility(View.GONE);
+                                viewHolder.ivMessage.setVisibility(View.GONE);
+
+                            }
                             viewHolder.isFile = false;
                         }
 
                         viewHolder.progressBar.setVisibility(View.GONE);
-                        if(!message.messageImage.equals("")){
+                        if(!message.messageImage.equals("") && !isFilterFile){
                             viewHolder.tvMessage.setVisibility(View.GONE);
                             viewHolder.ivMessage.setImageBitmap(null);
                             viewHolder.ivMessage.setVisibility(View.VISIBLE);
@@ -441,7 +451,15 @@ public class ChatActivity extends AppCompatActivity {
                             viewHolder.isFile = true;
                             viewHolder.fileUrl = message.fileUrl;
                         }else {
-                            viewHolder.tvMessage.setText(message.messages);
+                            if (!isFilterFile){
+                                viewHolder.tvMessage.setText(message.messages);
+                            } else{
+                                viewHolder.tvDisplayName.setVisibility(View.GONE);
+                                viewHolder.tvMessage.setVisibility(View.GONE);
+                                viewHolder.avatar.setVisibility(View.GONE);
+                                viewHolder.ivMessage.setVisibility(View.GONE);
+
+                            }
                             viewHolder.isFile = false;
                         }
                         viewHolder.progressBar.setVisibility(View.GONE);
@@ -567,6 +585,25 @@ public class ChatActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.filter_file){
+            if (isFilterFile){
+                isFilterFile = false;
+                mFirebaseAdapter.notifyDataSetChanged();
+                item.setIcon(R.drawable.ic_file_upload_white_48dp);
+            }
+            else{
+                isFilterFile = true;
+                mFirebaseAdapter.notifyDataSetChanged();
+                item.setIcon(R.drawable.ic_file_upload_black_48dp);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

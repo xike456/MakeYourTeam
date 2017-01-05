@@ -6,4 +6,11 @@
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView" />
+    <item
+        android:title="Filter File"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:id="@+id/filter_file"
+        android:icon="@drawable/ic_file_upload_white_48dp">
+    </item>
 </menu>
