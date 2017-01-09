@@ -86,6 +86,9 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onHashTagClicked(String hashTag) {
                 Bundle appData = new Bundle();
+                if (codeStringMessage == null || currentUserID_Clone == null)
+                    return;
+
                 appData.putString("messageID", codeStringMessage);
                 appData.putString("currentUserID", currentUserID_Clone);
                 searchView.setAppSearchData(appData);

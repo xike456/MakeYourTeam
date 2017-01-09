@@ -55,7 +55,7 @@ public class SearchMessageActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             final String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
-            String extrastring=intent.getBundleExtra(SearchManager.APP_DATA).getString("messageID");
+            final String extrastring=intent.getBundleExtra(SearchManager.APP_DATA).getString("messageID");
             final String currentUserID = intent.getBundleExtra(SearchManager.APP_DATA).getString("currentUserID");
 
             final LinearLayout.LayoutParams paramsMsgRight = new LinearLayout.
