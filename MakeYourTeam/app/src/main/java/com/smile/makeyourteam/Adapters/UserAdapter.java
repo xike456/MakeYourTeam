@@ -1,6 +1,7 @@
 package com.smile.makeyourteam.Adapters;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,14 @@ public class UserAdapter extends ArrayAdapter<User> {
         final TextView nickName = (TextView) v.findViewById(R.id.userNickName);
         username.setText(user.displayName);
         nickName.setText(user.nickName);
+
+        if (user.isNotify) {
+            username.setTypeface(null, Typeface.BOLD);
+            nickName.setTypeface(null, Typeface.BOLD);
+        } else {
+            username.setTypeface(null, Typeface.NORMAL);
+            nickName.setTypeface(null, Typeface.NORMAL);
+        }
 
         if (user.thumbnail.length() == 0) {
             avatar.setImageDrawable(ContextCompat.getDrawable(getContext(),

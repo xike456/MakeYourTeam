@@ -13,6 +13,7 @@ public class Group {
     public String id = "";
     public String title = "";
     public long timestamp;
+    public boolean isNotify = false;
     public String thumbnail = "";
 
     public Group () { }

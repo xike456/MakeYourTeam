@@ -13,6 +13,8 @@ public class User {
     public String nickName = "";
     public String email = "";
     public String teamId = "";
+    public boolean isNotify = false;
+    public long lastMessageTimeStamp = 0;
     public String thumbnail ="";
 
     public User() {

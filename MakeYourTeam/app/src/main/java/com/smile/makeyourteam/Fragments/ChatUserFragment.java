@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,12 +19,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.smile.makeyourteam.Activities.ChatActivity;
 import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Config;
+import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.Adapters.UserAdapter;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,9 +60,9 @@ public class ChatUserFragment extends Fragment {
     }
 
     void LoadUser(){
-        DatabaseReference database = Firebase.database.getReference("users");
-        Query myTopPostsQuery = database.orderByChild("teamId").startAt(MainActivity.currentUser.teamId).endAt(MainActivity.currentUser.teamId);
-        myTopPostsQuery.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference database = Firebase.database.getReference("users");
+        Query myTeamQuery = database.orderByChild("teamId").startAt(MainActivity.currentUser.teamId).endAt(MainActivity.currentUser.teamId);
+        myTeamQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = new User();
@@ -71,21 +76,50 @@ public class ChatUserFragment extends Fragment {
                     }
                 }
 
-                userAdapter = new UserAdapter(getActivity(), R.layout.user_item, uList);
-
-                lvUser.setAdapter(userAdapter);
+                DatabaseReference lastMessageDB = database.child(currentUser.id).child("lastMessages");
                 final User finalCurrentUser = currentUser;
-                lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                lastMessageDB.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(getContext(),ChatActivity.class);
-                        i.putExtra(Config.ID_USER_REVEIVE, uList.get(position).id);
-                        i.putExtra(Config.NAME_USER_RECEIVE,uList.get(position).displayName);
-                        i.putExtra(Config.USER_NAME,getUserName(finalCurrentUser));
-                        i.putExtra(Config.PHOTO_URL, finalCurrentUser.thumbnail);
-                        startActivity(i);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Message message = ds.getValue(Message.class);
+                            if (message.isNotify) {
+                                for (int j = 0; j < uList.size(); j++) {
+                                    if (uList.get(j).id.equals(message.senderId)) {
+                                        uList.get(j).isNotify = message.isNotify;
+                                    }
+                                }
+                            }
+                        }
+
+
+                        uList = sortByTimeStamp(uList);
+
+                        userAdapter = new UserAdapter(getActivity(), R.layout.user_item, uList);
+
+                        lvUser.setAdapter(userAdapter);
+                        lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                database.child(finalCurrentUser.id).child("lastMessages")
+                                        .child(((User) parent.getAdapter().getItem(position)).id)
+                                        .child("isNotify").setValue(false);
+                                Intent i = new Intent(getContext(),ChatActivity.class);
+                                i.putExtra(Config.ID_USER_REVEIVE, uList.get(position).id);
+                                i.putExtra(Config.NAME_USER_RECEIVE,uList.get(position).displayName);
+                                i.putExtra(Config.USER_NAME,getUserName(finalCurrentUser));
+                                i.putExtra(Config.PHOTO_URL, finalCurrentUser.thumbnail);
+                                startActivity(i);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
+
             }
 
             @Override
@@ -93,6 +127,16 @@ public class ChatUserFragment extends Fragment {
 
             }
         });
+    }
+
+    private List<User> sortByTimeStamp(List<User> uList) {
+        Collections.sort(uList, new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return (new Date(user2.lastMessageTimeStamp)).compareTo((new Date(user1.lastMessageTimeStamp)));
+            }
+        });
+        return uList;
     }
 
     private String getUserName(User user){

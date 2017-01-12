@@ -3,6 +3,7 @@ package com.smile.makeyourteam.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -73,6 +74,14 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
         Group group = groups.get(position);
         holder.title.setText(group.title);
         holder.timeStamp.setText(timestampToHour(group.timestamp));
+
+        if (group.isNotify) {
+            holder.title.setTypeface(null, Typeface.BOLD);
+            holder.timeStamp.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.title.setTypeface(null, Typeface.NORMAL);
+            holder.timeStamp.setTypeface(null, Typeface.NORMAL);
+        }
 
         // loading album cover using Glide library
         if (group.thumbnail.length() == 0) {
@@ -172,6 +181,11 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.MyViewHold
                 public void onClick(View view) {
                     Context context = itemView.getContext();
                     final User finalCurrentUser = MainActivity.currentUser;
+                    final DatabaseReference database = Firebase.database.getReference("users");
+                    database.child(finalCurrentUser.id).child("lastMessagesGroup")
+                            .child(groups.get(getLayoutPosition()).id)
+                            .child("isNotify").setValue(false);
+                    groups.get(getLayoutPosition()).isNotify = false;
                     Intent intent = new Intent(context, ChatActivity.class);
                     intent.putExtra(Config.ID_GROUP, groups.get(getLayoutPosition()).id);
                     intent.putExtra(Config.NAME_GROUP, groups.get(getLayoutPosition()).title);

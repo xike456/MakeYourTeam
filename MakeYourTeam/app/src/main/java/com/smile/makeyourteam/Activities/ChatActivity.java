@@ -51,6 +51,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.smile.makeyourteam.Config;
+import com.smile.makeyourteam.Models.Group;
 import com.smile.makeyourteam.Models.Message;
 import com.smile.makeyourteam.Models.MessageViewHolder;
 import com.smile.makeyourteam.Models.User;
@@ -105,6 +106,8 @@ public class ChatActivity extends AppCompatActivity {
     private Boolean isFilterFile = false;
 
     public String codeStringMessage;
+    private List<User> userList = new ArrayList<>();
+    private List<User> userInGroup = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,9 +266,19 @@ public class ChatActivity extends AppCompatActivity {
                 DatabaseReference databaseRef = Firebase.database.getReference("message");
                 Message message;
                 if(isGroupChat){
-                    message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, idGroup, photoUrl, "G-"+nameGroup,"");
+                    message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, idGroup, photoUrl, "G-"+nameGroup,"");DatabaseReference dbReferenceUsers = Firebase.database.getReference("users");
+                    message.isNotify = true;
+                    for (User user: userInGroup) {
+                        dbReferenceUsers.child(user.id).child("lastMessagesGroup").child(idGroup).setValue(message);
+                        dbReferenceUsers.child(user.id).child("groups").child(idGroup)
+                                .child("timestamp").setValue(message.timestamp);
+                    }
                 }else {
                     message = new Message(userName, new Date().getTime(),etMessage.getText().toString(), currentUserID, id_userReceive, photoUrl, nameUserReceive,"");
+                    message.isNotify = true;
+                    DatabaseReference dbReferenceUsers = Firebase.database.getReference("users");
+                    dbReferenceUsers.child(id_userReceive).child("lastMessages").child(currentUserID).setValue(message);
+                    dbReferenceUsers.child(id_userReceive).child("lastMessageTimeStamp").setValue(message.timestamp);
                 }
                 etMessage.setText("");
                 databaseRef.child(finalCodeString).push().setValue(message);
@@ -791,9 +804,12 @@ public class ChatActivity extends AppCompatActivity {
                 uList.clear();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     final User user = ds.getValue(User.class);
+                    userList.add(user);
                     uList.add(getDisplayName(user));
                 }
-
+                if (isGroupChat) {
+                    LoadGroupUser();
+                }
                 adapterUser = new ArrayAdapter<String>(getApplicationContext(), R.layout.drop_down_hashtag, uList);
                 etMessage.setAdapter(adapterUser);
             }
@@ -803,6 +819,30 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    void LoadGroupUser(){
+        userInGroup.clear();
+        for (final User user: userList) {
+            DatabaseReference database = Firebase.database.getReference("users").child(user.id).child("groups");
+            database.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                        Group group = ds.getValue(Group.class);
+                        if (group.id.equals(idGroup)) {
+                            userInGroup.add(user);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private String getDisplayName(User user) {

@@ -18,6 +18,7 @@ public class Message {
     public String fileName = "";
     public String fileUrl = "";
     public long fileSize = -1;
+    public boolean isNotify = false;
 
     public Message(){
     }

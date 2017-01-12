@@ -21,10 +21,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.smile.makeyourteam.Adapters.GroupsAdapter;
 import com.smile.makeyourteam.Models.Group;
+import com.smile.makeyourteam.Models.Message;
+import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
 import com.smile.makeyourteam.server.Firebase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,8 +71,8 @@ public class ChatGroupFragment extends Fragment {
     }
 
     private void loadGroups() {
-        DatabaseReference mDatabase = Firebase.database.getReference();
-        FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
+        final DatabaseReference mDatabase = Firebase.database.getReference();
+        final FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
         DatabaseReference mRef = mDatabase.child("users").child(mUser.getUid()).child("groups");
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,7 +82,38 @@ public class ChatGroupFragment extends Fragment {
                     Group group = ds.getValue(Group.class);
                     groups.add(group);
                 }
-                adapter.notifyDataSetChanged();
+
+                DatabaseReference lastMessageDB = mDatabase.child("users").child(mUser.getUid()).child("lastMessagesGroup");
+                lastMessageDB.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Message message = ds.getValue(Message.class);
+                            if (message.isNotify) {
+                                for (int j = 0; j < groups.size(); j++) {
+                                    if (groups.get(j).id.equals(message.receiveId)) {
+                                        groups.get(j).isNotify = message.isNotify;
+                                    }
+                                }
+                            }
+                        }
+
+                        Collections.sort(groups, new Comparator<Group>() {
+                            @Override
+                            public int compare(Group group1, Group group2) {
+                                return (new Date(group2.timestamp)).compareTo((new Date(group1.timestamp)));
+                            }
+                        });
+                        adapter = new GroupsAdapter(getContext(), groups);
+                        adapter.notifyDataSetChanged();
+                        recyclerView.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override
