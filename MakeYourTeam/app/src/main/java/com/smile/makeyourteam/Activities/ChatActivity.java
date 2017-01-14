@@ -278,7 +278,8 @@ public class ChatActivity extends AppCompatActivity {
                     message.isNotify = true;
                     DatabaseReference dbReferenceUsers = Firebase.database.getReference("users");
                     dbReferenceUsers.child(id_userReceive).child("lastMessages").child(currentUserID).setValue(message);
-                    dbReferenceUsers.child(id_userReceive).child("lastMessageTimeStamp").setValue(message.timestamp);
+                    message.isNotify = false;
+                    dbReferenceUsers.child(currentUserID).child("lastMessages").child(id_userReceive).setValue(message);
                 }
                 etMessage.setText("");
                 databaseRef.child(finalCodeString).push().setValue(message);

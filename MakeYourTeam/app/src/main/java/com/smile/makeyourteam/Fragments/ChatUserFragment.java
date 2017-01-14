@@ -83,11 +83,15 @@ public class ChatUserFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()) {
                             Message message = ds.getValue(Message.class);
-                            if (message.isNotify) {
-                                for (int j = 0; j < uList.size(); j++) {
-                                    if (uList.get(j).id.equals(message.senderId)) {
-                                        uList.get(j).isNotify = message.isNotify;
-                                    }
+                            for (int j = 0; j < uList.size(); j++) {
+                                String senderId = message.senderId;
+                                if (finalCurrentUser.id.equals(message.senderId)) {
+                                    senderId = message.receiveId;
+                                }
+                                if (uList.get(j).id.equals(senderId)) {
+                                    uList.get(j).isNotify = message.isNotify;
+                                    uList.get(j).lastMessageTimeStamp = message.timestamp;
+                                    uList.get(j).lastMessage = message.messages;
                                 }
                             }
                         }

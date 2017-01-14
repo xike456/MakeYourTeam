@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.smile.makeyourteam.Activities.MainActivity;
 import com.smile.makeyourteam.Models.User;
 import com.smile.makeyourteam.R;
 
@@ -42,22 +41,28 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
     }
 
+    public String getMessageReview(String message) {
+        if (message.length() < 28)
+            return message;
+        return message.substring(0, 28) + "...";
+    }
+
     public View getView(final int position, View v, ViewGroup parent){
         LayoutInflater inflater = context.getLayoutInflater();
         v = inflater.inflate(resourceId, null);
         User user = users.get(position);
         final ImageView avatar = (ImageView) v.findViewById(R.id.imageAvatarUser);
         final TextView username = (TextView) v.findViewById(R.id.userDisplayName);
-        final TextView nickName = (TextView) v.findViewById(R.id.userNickName);
+        final TextView lastMessage = (TextView) v.findViewById(R.id.lastMessage);
         username.setText(user.displayName);
-        nickName.setText(user.nickName);
+        lastMessage.setText(getMessageReview(user.lastMessage));
 
         if (user.isNotify) {
             username.setTypeface(null, Typeface.BOLD);
-            nickName.setTypeface(null, Typeface.BOLD);
+            lastMessage.setTypeface(null, Typeface.BOLD);
         } else {
             username.setTypeface(null, Typeface.NORMAL);
-            nickName.setTypeface(null, Typeface.NORMAL);
+            lastMessage.setTypeface(null, Typeface.NORMAL);
         }
 
         if (user.thumbnail.length() == 0) {

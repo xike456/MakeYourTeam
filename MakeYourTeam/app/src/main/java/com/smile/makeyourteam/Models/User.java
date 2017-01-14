@@ -15,6 +15,7 @@ public class User {
     public String teamId = "";
     public boolean isNotify = false;
     public long lastMessageTimeStamp = 0;
+    public String lastMessage = "";
     public String thumbnail ="";
 
     public User() {
