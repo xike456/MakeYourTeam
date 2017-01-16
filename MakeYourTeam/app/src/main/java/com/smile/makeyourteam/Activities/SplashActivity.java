@@ -50,14 +50,17 @@ public class SplashActivity extends AppCompatActivity {
 
     private void getCurrentUser() {
         FirebaseUser mUser = Firebase.firebaseAuth.getCurrentUser();
-        DatabaseReference database = Firebase.database.getReference("users");
-        database.child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        final DatabaseReference database = Firebase.database.getReference("users").child(mUser.getUid());
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 MainActivity.currentUser = dataSnapshot.getValue(User.class);
+                if (MainActivity.currentUser == null) return;
                 if (MainActivity.currentUser.teamId == null || MainActivity.currentUser.teamId.isEmpty()) {
+                    database.removeEventListener(this);
                     startJoinTeam();
                 } else {
+                    database.removeEventListener(this);
                     startMainActivity();
                 }
             }

@@ -54,7 +54,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         final ImageView avatar = (ImageView) v.findViewById(R.id.imageAvatarUser);
         final TextView username = (TextView) v.findViewById(R.id.userDisplayName);
         final TextView lastMessage = (TextView) v.findViewById(R.id.lastMessage);
-        username.setText(user.displayName);
+        username.setText(getUserName(user));
         lastMessage.setText(getMessageReview(user.lastMessage));
 
         if (user.isNotify) {
@@ -88,5 +88,14 @@ public class UserAdapter extends ArrayAdapter<User> {
             });
         }
         return v;
+    }
+
+    private String getUserName(User user) {
+        if(!user.displayName.equals(""))
+            return user.displayName;
+        if(!user.nickName.equals(""))
+            return user.nickName;
+
+        return user.email;
     }
 }

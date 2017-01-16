@@ -25,10 +25,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
@@ -264,8 +267,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
 
         mUser.updateEmail(editEmail.getText().toString());
-        mUser.updateProfile(profileUpdates);
-        mProgress.hide();
+        mUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();
+                mProgress.hide();
+            }
+        });
     }
 
 
