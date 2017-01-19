@@ -1,76 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.smile.makeyourteam.MainActivity">
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/layoutFriend">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/cardViewTabs"
+        android:background="@color/bgViewTabs">
+    </android.support.v4.view.ViewPager>
 
-        <Button
-            android:id="@+id/btnLogOut"
-            android:text="LogOut"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btnCreateGroup"
-            android:text="Create Group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="Friend"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scrollbars="vertical"
-            android:fillViewport="true">
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lvUser"></ListView>
-        </ScrollView>
-    </LinearLayout>
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cardViewTabs"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/layoutFriend"
-        android:orientation="vertical">
-        <TextView
+        app:cardElevation="5dp">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorHeight="5dp"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/textTabs"
+            android:background="@color/bgTabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="Group"/>
+            android:layout_height="wrap_content">
+        </android.support.design.widget.TabLayout>
+    </android.support.v7.widget.CardView>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:fillViewport="true"
-            android:layout_weight="1">
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lvGroup"></ListView>
-        </ScrollView>
-    </LinearLayout>
+
 
 </RelativeLayout>
